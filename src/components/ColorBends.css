@@ -1,0 +1,3 @@
+.color-bends-container { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.color-bends-container canvas { display: block; width: 100%; height: 100%; }
+.color-bends-fallback { background: radial-gradient(ellipse at 50% 35%, rgba(71,34,84,.72), transparent 48%), linear-gradient(120deg, #120918, #25102f 55%, #111016); }

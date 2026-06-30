@@ -1,0 +1,3 @@
+.magic-rings-container { width: 100%; height: 100%; }
+.magic-rings-container canvas { display: block; width: 100%; height: 100%; }
+.magic-rings-fallback { opacity: .32; background: repeating-radial-gradient(ellipse at center, transparent 0 10%, rgba(166,116,213,.16) 10.3% 10.55%, transparent 10.8% 15%); }
