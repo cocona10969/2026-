@@ -943,7 +943,7 @@ function App() {
       <div className="liquid-panels" aria-hidden="false">
         <div className="panels-liquid-bg" aria-hidden="true">
           <LiquidEther
-            colors={['#160816', '#ff5da8', '#8a5cff', '#b497cf']}
+            colors={['#08060b', '#ff5da8', '#4a1735', '#241122']}
             autoSpeed={0.42}
             autoIntensity={1.18}
             resolution={0.65}
@@ -1109,6 +1109,11 @@ function App() {
                         {insight}
                       </em>
                     ))}
+                  </span>
+                  <span className={`capability-icon capability-icon-${item.id}`} aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
                   </span>
                 </button>
               ))}
