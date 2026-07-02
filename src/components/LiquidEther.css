@@ -22,6 +22,11 @@
   will-change: transform, opacity, filter;
 }
 
+.liquid-ether-container:not(.is-active) .ether-field,
+.liquid-ether-container:not(.is-active) .ether-vein {
+  animation-play-state: paused;
+}
+
 .liquid-ether-container::before {
   inset: -10%;
   opacity: .74;

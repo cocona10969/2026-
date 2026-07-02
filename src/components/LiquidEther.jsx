@@ -18,20 +18,29 @@ export default function LiquidEther({
 
     let start = performance.now()
     let visible = true
+    let pageVisible = !document.hidden
+    let lastRender = 0
+    const frameInterval = 1000 / 30
 
     const update = (now) => {
-      if (!visible) return
+      if (!visible || !pageVisible) {
+        frameRef.current = null
+        return
+      }
+      frameRef.current = requestAnimationFrame(update)
+      if (now - lastRender < frameInterval) return
+      lastRender = now
       const t = ((now - start) / 1000) * autoSpeed
       root.style.setProperty('--ether-x', `${50 + Math.sin(t * 0.72) * 24 * autoIntensity}%`)
       root.style.setProperty('--ether-y', `${50 + Math.cos(t * 0.54) * 18 * autoIntensity}%`)
       root.style.setProperty('--ether-x2', `${50 + Math.sin(t * 0.42 + 1.9) * 32 * autoIntensity}%`)
       root.style.setProperty('--ether-y2', `${50 + Math.cos(t * 0.66 + 1.2) * 22 * autoIntensity}%`)
-      frameRef.current = requestAnimationFrame(update)
     }
 
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting
-      if (visible && !frameRef.current) {
+      root.classList.toggle('is-active', visible && pageVisible)
+      if (visible && pageVisible && !frameRef.current) {
         start = performance.now() - (performance.now() - start)
         frameRef.current = requestAnimationFrame(update)
       }
@@ -41,11 +50,26 @@ export default function LiquidEther({
       }
     }, { threshold: 0.01 })
 
+    const handleVisibility = () => {
+      pageVisible = !document.hidden
+      root.classList.toggle('is-active', visible && pageVisible)
+      if (pageVisible && visible && !frameRef.current) {
+        frameRef.current = requestAnimationFrame(update)
+      }
+      if (!pageVisible && frameRef.current) {
+        cancelAnimationFrame(frameRef.current)
+        frameRef.current = null
+      }
+    }
+
     observer.observe(root)
+    root.classList.add('is-active')
+    document.addEventListener('visibilitychange', handleVisibility)
     frameRef.current = requestAnimationFrame(update)
 
     return () => {
       observer.disconnect()
+      document.removeEventListener('visibilitychange', handleVisibility)
       if (frameRef.current) cancelAnimationFrame(frameRef.current)
     }
   }, [autoSpeed, autoIntensity])

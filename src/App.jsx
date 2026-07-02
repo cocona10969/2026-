@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import BorderGlow from './components/BorderGlow'
 import MagicRings from './components/MagicRings'
 import ColorBends from './components/ColorBends'
-import SoftAurora from './components/SoftAurora'
 import LiquidEther from './components/LiquidEther'
 
 const Arrow = ({ diagonal = false }) => (
@@ -104,8 +103,8 @@ const CustomCursor = () => {
 
   return (
     <div className="custom-cursor" aria-hidden="true">
-      <img className="cursor-image cursor-image-arrow" src="/images/cursor/cursor-arrow.png" alt="" />
-      <img className="cursor-image cursor-image-click" src="/images/cursor/cursor-hand-pink.png" alt="" />
+      <img className="cursor-image cursor-image-arrow" src="/images/cursor/cursor-arrow.png" alt="" decoding="async" />
+      <img className="cursor-image cursor-image-click" src="/images/cursor/cursor-hand-pink.png" alt="" decoding="async" />
     </div>
   )
 }
@@ -119,7 +118,7 @@ const projects = [
     tone: 'ember',
     tag: '',
     glow: '18 92 66',
-    colors: ['#ff7a45', '#f43f8b', '#ff5da8'],
+    colors: ['#2e0d1f', '#cc5a8b', '#f8bfd2'],
   },
   {
     id: '02',
@@ -565,6 +564,8 @@ function ImageShowcaseModal({ open, gallery, activeIndex, onSelect, onClose }) {
         key={image.src}
         src={image.src}
         alt={image.title}
+        loading="lazy"
+        decoding="async"
         onError={() => setImageErrors((current) => ({ ...current, [index]: true }))}
       />
     ) : (
@@ -730,13 +731,26 @@ function App() {
   const [activeCapabilityId, setActiveCapabilityId] = useState(null)
 
   useEffect(() => {
-    const updateNav = () => setNavScrolled(window.scrollY >= window.innerHeight - 80)
+    let rafId = 0
+    let lastScrolled = null
+    const updateNav = () => {
+      rafId = 0
+      const nextScrolled = window.scrollY >= window.innerHeight - 80
+      if (nextScrolled !== lastScrolled) {
+        lastScrolled = nextScrolled
+        setNavScrolled(nextScrolled)
+      }
+    }
+    const requestUpdateNav = () => {
+      if (!rafId) rafId = window.requestAnimationFrame(updateNav)
+    }
     updateNav()
-    window.addEventListener('scroll', updateNav, { passive: true })
-    window.addEventListener('resize', updateNav)
+    window.addEventListener('scroll', requestUpdateNav, { passive: true })
+    window.addEventListener('resize', requestUpdateNav)
     return () => {
-      window.removeEventListener('scroll', updateNav)
-      window.removeEventListener('resize', updateNav)
+      window.removeEventListener('scroll', requestUpdateNav)
+      window.removeEventListener('resize', requestUpdateNav)
+      if (rafId) window.cancelAnimationFrame(rafId)
     }
   }, [])
 
@@ -898,37 +912,22 @@ function App() {
       </header>
 
       <section className="hero" id="home">
-        <div className="hero-soft-aurora" aria-hidden="true">
-          <SoftAurora
-            speed={0.28}
-            scale={2.05}
-            brightness={0.78}
-            color1="#ff5da8"
-            color2="#5f7dff"
-            noiseFrequency={2.85}
-            noiseAmplitude={0.58}
-            bandHeight={0.5}
-            bandSpread={0.72}
-            octaveDecay={0.18}
-            layerOffset={0.36}
-            colorSpeed={0.42}
-            enableMouseInteraction
-            mouseInfluence={0.08}
-          />
-        </div>
+        <video className="hero-video-bg" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
+          <source src="/videos/hero-background.mp4" type="video/mp4" />
+        </video>
         <PhotoshopBar />
         <div className="hero-transition" aria-hidden="true" />
 
         <div className="hero-content shell">
           <div className="hero-title-block">
             <div className="hero-laying-character" aria-hidden="true">
-              <img src="/hero-qgirl-laying-cutout.png" alt="" />
+              <img src="/hero-qgirl-laying-cutout.png" alt="" fetchPriority="high" decoding="async" />
             </div>
             <button className="hero-smile-icon" type="button" onClick={() => scrollTo('#works')} aria-label="跳转到视觉展示">
-              <img src="/smile-icon.gif" alt="" aria-hidden="true" />
+              <img src="/smile-icon.gif" alt="" aria-hidden="true" decoding="async" />
             </button>
             <h1 className="portfolio-title portfolio-reference portfolio-cover-title" aria-label="PORTFOLIO">
-              <img src="/portfolio-cover-title-pink.png" alt="" aria-hidden="true" />
+              <img src="/portfolio-cover-title-pink.png" alt="" aria-hidden="true" fetchPriority="high" decoding="async" />
             </h1>
             <div className="hero-sticker">VISUAL · AI · CONTENT DESIGN</div>
           </div>
@@ -943,7 +942,7 @@ function App() {
       <div className="liquid-panels" aria-hidden="false">
         <div className="panels-liquid-bg" aria-hidden="true">
           <LiquidEther
-            colors={['#08060b', '#ff5da8', '#4a1735', '#241122']}
+            colors={['#080409', '#2e0d1f', '#cc5a8b', '#f8bfd2']}
             autoSpeed={0.42}
             autoIntensity={1.18}
             resolution={0.65}
@@ -958,10 +957,10 @@ function App() {
             <div className="portrait-wrap">
               <div className="portrait tilted-portrait" onPointerMove={handlePortraitTilt} onPointerLeave={resetPortraitTilt}>
                 <div className="portrait-halo" />
-                <img className="portrait-avatar" src="/about-avatar-chair.png" alt="黄子盈 3D 形象" />
+                <img className="portrait-avatar" src="/about-avatar-chair.png" alt="黄子盈 3D 形象" loading="lazy" decoding="async" />
                 <div className="portrait-label">ZIYING HUANG<br />VISUAL & AI DESIGNER</div>
               </div>
-              <span className="portrait-note">梦想是去任何想去的地方</span>
+              <span className="portrait-note">梦想是去任何想去的地方，四面八方都是前方，不管往哪走都是向前走</span>
             </div>
 
             <div className="about-copy">
@@ -1025,15 +1024,15 @@ function App() {
           <div className="works-heading">
             <h2>VISUAL<br /><em>DISPLAY</em></h2>
             <div className="works-falling-character" aria-hidden="true">
-              <img src="/works-character-crouch-new.png" alt="" />
+              <img src="/works-character-crouch-new.png" alt="" loading="lazy" decoding="async" />
             </div>
             <div className="works-thought-bubble" aria-hidden="true">
-              <img className="thought-cloud" src="/images/character/thought-bubble.png" alt="" />
+              <img className="thought-cloud" src="/images/character/thought-bubble.png" alt="" loading="lazy" decoding="async" />
               <div className="thought-product-carousel">
-                <img className="thought-product thought-drink" src="/images/thought/thought-drink.png" alt="" />
-                <img className="thought-product thought-plane" src="/images/thought/thought-plane.png" alt="" />
-                <img className="thought-product thought-player" src="/images/thought/thought-player.png" alt="" />
-                <img className="thought-product thought-suitcase" src="/images/thought/thought-suitcase.png" alt="" />
+                <img className="thought-product thought-drink" src="/images/thought/thought-drink.png" alt="" loading="lazy" decoding="async" />
+                <img className="thought-product thought-plane" src="/images/thought/thought-plane.png" alt="" loading="lazy" decoding="async" />
+                <img className="thought-product thought-player" src="/images/thought/thought-player.png" alt="" loading="lazy" decoding="async" />
+                <img className="thought-product thought-suitcase" src="/images/thought/thought-suitcase.png" alt="" loading="lazy" decoding="async" />
               </div>
             </div>
             <p>一些关于速度、质感、内容与未来的视觉实验。<br />真实项目图片将在下一阶段替换。</p>
@@ -1045,7 +1044,7 @@ function App() {
                 key={project.id}
                 edgeSensitivity={34}
                 glowColor={project.glow}
-                backgroundColor="#101016"
+                backgroundColor="#120711"
                 borderRadius={26}
                 glowRadius={34}
                 glowIntensity={1.15}
@@ -1128,11 +1127,15 @@ function App() {
                 src="/images/character/ai-tools-gift-cutout.png"
                 alt=""
                 aria-hidden="true"
+                loading="lazy"
+                decoding="async"
               />
               <img
                 className="capability-character"
                 src="/images/character/strengths-designer-full.png"
                 alt="AI 设计师人物形象"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -1143,8 +1146,8 @@ function App() {
       <footer className="contact" id="contact">
         <div className="contact-rings" aria-hidden="true">
           <MagicRings
-            color="#ff5da8"
-            colorTwo="#ff9acb"
+            color="#cc5a8b"
+            colorTwo="#f8bfd2"
             ringCount={5}
             speed={0.32}
             attenuation={12}

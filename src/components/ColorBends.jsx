@@ -104,8 +104,12 @@ export default function ColorBends({
   useEffect(() => {
     const container = containerRef.current
     if (!container) return undefined
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      container.classList.add('color-bends-fallback')
+      return undefined
+    }
     let renderer
-    try { renderer = new Renderer({ alpha: true, premultipliedAlpha: true, antialias: false, dpr: Math.min(window.devicePixelRatio || 1, 2) }) } catch { container.classList.add('color-bends-fallback'); return undefined }
+    try { renderer = new Renderer({ alpha: true, premultipliedAlpha: true, antialias: false, dpr: Math.min(window.devicePixelRatio || 1, 1.25) }) } catch { container.classList.add('color-bends-fallback'); return undefined }
     const gl = renderer.gl
     gl.clearColor(0, 0, 0, 0)
     gl.enable(gl.BLEND)
@@ -138,9 +142,32 @@ export default function ColorBends({
     window.addEventListener('pointermove', move, { passive: true })
     resize()
     let frame
+    let running = !document.hidden
+    let lastRender = 0
+    const frameInterval = 1000 / 30
     const start = performance.now()
+    const stopLoop = () => {
+      if (frame) {
+        cancelAnimationFrame(frame)
+        frame = null
+      }
+    }
+    const startLoop = () => {
+      if (!frame && running) frame = requestAnimationFrame(loop)
+    }
+    const handleVisibility = () => {
+      running = !document.hidden
+      if (running) startLoop()
+      else stopLoop()
+    }
     const loop = (time) => {
+      if (!running) {
+        frame = null
+        return
+      }
       frame = requestAnimationFrame(loop)
+      if (time - lastRender < frameInterval) return
+      lastRender = time
       const p = propsRef.current
       const elapsed = (time - start) / 1000
       pointerCurrent.current[0] += (pointerTarget.current[0] - pointerCurrent.current[0]) * .06
@@ -164,10 +191,12 @@ export default function ColorBends({
       uniforms.uBandWidth.value = p.bandWidth
       renderer.render({ scene: mesh })
     }
+    document.addEventListener('visibilitychange', handleVisibility)
     frame = requestAnimationFrame(loop)
     return () => {
-      cancelAnimationFrame(frame)
+      stopLoop()
       observer.disconnect()
+      document.removeEventListener('visibilitychange', handleVisibility)
       window.removeEventListener('pointermove', move)
       if (gl.canvas.parentNode === container) container.removeChild(gl.canvas)
     }
