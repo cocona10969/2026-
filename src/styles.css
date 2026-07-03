@@ -1044,23 +1044,25 @@ svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-l
 .works .project-card,
 .works .project-card.wide {
   grid-column: auto;
-  flex: .55 1 0;
+  flex: .72 1 0;
   min-width: 0;
   border-radius: 28px;
   overflow: hidden;
-  transition: flex 1s cubic-bezier(.19,1,.22,1), transform .75s cubic-bezier(.19,1,.22,1), filter .75s ease;
+  transition: flex .82s cubic-bezier(.19,1,.22,1), min-width .82s cubic-bezier(.19,1,.22,1), transform .62s cubic-bezier(.19,1,.22,1), filter .62s ease;
   will-change: transform, filter;
 }
 
 .works .projects-grid:hover .project-card,
 .works .projects-grid:focus-within .project-card {
-  flex: .44 1 0;
-  filter: saturate(.78) brightness(.78);
+  flex: .68 1 0;
+  min-width: clamp(150px, 10vw, 210px);
+  filter: saturate(.82) brightness(.82);
 }
 
 .works .projects-grid .project-card:hover,
 .works .projects-grid .project-card:focus-within {
-  flex: 3.1 1 0;
+  flex: 1.85 1 0;
+  min-width: clamp(260px, 19vw, 380px);
   filter: saturate(1.04) brightness(1);
   transform: translateY(-10px);
 }
@@ -2530,6 +2532,11 @@ body.modal-open {
   border-color: rgba(255,255,255,.18);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
+}
+.capability-card:nth-child(-n+2) .capability-bubble-menu em:nth-child(3) {
+  --bubble-rot: -15deg;
+  --bubble-x: clamp(78px, 6.6vw, 118px);
+  --bubble-y: 2px;
 }
 .capability-card:nth-child(n+3) .capability-bubble-menu {
   left: clamp(18px, 1.55vw, 28px);

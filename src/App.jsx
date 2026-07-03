@@ -4,6 +4,8 @@ import MagicRings from './components/MagicRings'
 import ColorBends from './components/ColorBends'
 import LiquidEther from './components/LiquidEther'
 
+const assetPath = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`
+
 const Arrow = ({ diagonal = false }) => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d={diagonal ? 'M7 17 17 7M8 7h9v9' : 'M5 12h14m-5-5 5 5-5 5'} />
@@ -103,8 +105,8 @@ const CustomCursor = () => {
 
   return (
     <div className="custom-cursor" aria-hidden="true">
-      <img className="cursor-image cursor-image-arrow" src="/images/cursor/cursor-arrow.png" alt="" decoding="async" />
-      <img className="cursor-image cursor-image-click" src="/images/cursor/cursor-hand-pink.png" alt="" decoding="async" />
+      <img className="cursor-image cursor-image-arrow" src={assetPath('/images/cursor/cursor-arrow.png')} alt="" decoding="async" />
+      <img className="cursor-image cursor-image-click" src={assetPath('/images/cursor/cursor-hand-pink.png')} alt="" decoding="async" />
     </div>
   )
 }
@@ -157,22 +159,33 @@ const aigcVideos = [
     label: '落地项目',
     title: '西游后传天地重光',
     meta: '西游记衍生AI漫剧',
-    src: '/videos/aigc-01.mp4',
+    src: assetPath('/videos/aigc-01.mp4'),
+    poster: assetPath('/videos/posters/aigc-01.jpg'),
     note: '视频文件暂时无法加载，请确认 public/videos/aigc-01.mp4 是否存在。',
   },
   {
     label: 'DEMO',
     title: '西游后传天地重光',
     meta: '打斗抽卡测试',
-    src: '/videos/aigc-02.mp4',
+    src: assetPath('/videos/aigc-02.mp4'),
+    poster: assetPath('/videos/posters/aigc-02.jpg'),
     note: '视频文件暂时无法加载，请确认 public/videos/aigc-02.mp4 是否存在。',
   },
   {
     label: 'DEMO',
     title: '公爹为夫密林场景',
     meta: '场景情绪渲染测试',
-    src: '/videos/aigc-03.mp4',
+    src: assetPath('/videos/aigc-03.mp4'),
+    poster: assetPath('/videos/posters/aigc-03.jpg'),
     note: '视频文件暂时无法加载，请确认 public/videos/aigc-03.mp4 是否存在。',
+  },
+  {
+    label: 'DEMO',
+    title: '洪荒',
+    meta: '剧本测试',
+    src: assetPath('/videos/aigc-04.mp4'),
+    poster: assetPath('/videos/posters/aigc-04.jpg'),
+    note: '视频文件暂时无法加载，请确认 public/videos/aigc-04.mp4 是否存在。',
   },
 ]
 
@@ -180,25 +193,25 @@ const brandVisualImages = [
   {
     title: '品牌视觉封面',
     meta: 'AIGC & BRAND VISUAL',
-    src: '/images/brand/brand-01.jpg',
+    src: assetPath('/images/brand/brand-01.jpg'),
     note: '把第 1 张品牌视觉图片放到 public/images/brand/brand-01.jpg 后即可显示。',
   },
   {
     title: '产品场景系统',
     meta: 'PRODUCT IMAGE',
-    src: '/images/brand/brand-02.jpg',
+    src: assetPath('/images/brand/brand-02.jpg'),
     note: '把第 2 张品牌视觉图片放到 public/images/brand/brand-02.jpg 后即可显示。',
   },
   {
     title: '活动版式延展',
     meta: 'LAYOUT DESIGN',
-    src: '/images/brand/brand-03.jpg',
+    src: assetPath('/images/brand/brand-03.jpg'),
     note: '把第 3 张品牌视觉图片放到 public/images/brand/brand-03.jpg 后即可显示。',
   },
   {
     title: '视觉细节延展',
     meta: 'VISUAL DETAIL',
-    src: '/images/brand/brand-04.jpg',
+    src: assetPath('/images/brand/brand-04.jpg'),
     note: '把第 4 张品牌视觉图片放到 public/images/brand/brand-04.jpg 后即可显示。',
   },
 ]
@@ -221,97 +234,97 @@ const galleryProjects = {
       {
         title: '平面插画 01',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-01.png',
+        src: assetPath('/images/illustration/illustration-01.png'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-01.png 是否存在。',
       },
       {
         title: '平面插画 02',
         meta: 'CHARACTER DESIGN',
-        src: '/images/illustration/illustration-02.png',
+        src: assetPath('/images/illustration/illustration-02.png'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-02.png 是否存在。',
       },
       {
         title: '平面插画 03',
         meta: 'POSTER SYSTEM',
-        src: '/images/illustration/illustration-03.png',
+        src: assetPath('/images/illustration/illustration-03.png'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-03.png 是否存在。',
       },
       {
         title: '平面插画 04',
         meta: 'CONTENT DESIGN',
-        src: '/images/illustration/illustration-04.png',
+        src: assetPath('/images/illustration/illustration-04.png'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-04.png 是否存在。',
       },
       {
         title: '平面插画 05',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-05.png',
+        src: assetPath('/images/illustration/illustration-05.png'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-05.png 是否存在。',
       },
       {
         title: '平面插画 06',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-06.png',
+        src: assetPath('/images/illustration/illustration-06.png'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-06.png 是否存在。',
       },
       {
         title: '平面插画 07',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-07.png',
+        src: assetPath('/images/illustration/illustration-07.png'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-07.png 是否存在。',
       },
       {
         title: '平面插画 08',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-08.png',
+        src: assetPath('/images/illustration/illustration-08.png'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-08.png 是否存在。',
       },
       {
         title: '平面插画 09',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-09.jpg',
+        src: assetPath('/images/illustration/illustration-09.jpg'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-09.jpg 是否存在。',
       },
       {
         title: '平面插画 10',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-10.jpg',
+        src: assetPath('/images/illustration/illustration-10.jpg'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-10.jpg 是否存在。',
       },
       {
         title: '平面插画 11',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-11.jpg',
+        src: assetPath('/images/illustration/illustration-11.jpg'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-11.jpg 是否存在。',
       },
       {
         title: '平面插画 12',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-12.jpg',
+        src: assetPath('/images/illustration/illustration-12.jpg'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-12.jpg 是否存在。',
       },
       {
         title: '平面插画 13',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-13.jpg',
+        src: assetPath('/images/illustration/illustration-13.jpg'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-13.jpg 是否存在。',
       },
       {
         title: '平面插画 14',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-14.jpg',
+        src: assetPath('/images/illustration/illustration-14.jpg'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-14.jpg 是否存在。',
       },
       {
         title: '平面插画 15',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-15.jpg',
+        src: assetPath('/images/illustration/illustration-15.jpg'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-15.jpg 是否存在。',
       },
       {
         title: '平面插画 16',
         meta: 'GRAPHIC ILLUSTRATION',
-        src: '/images/illustration/illustration-16.png',
+        src: assetPath('/images/illustration/illustration-16.png'),
         note: '图片文件暂时无法加载，请确认 public/images/illustration/illustration-16.png 是否存在。',
       },
     ],
@@ -325,25 +338,25 @@ const galleryProjects = {
       {
         title: '创意宣传封面',
         meta: 'CREATIVE PROMOTION',
-        src: '/images/promo/promo-01.jpg',
+        src: assetPath('/images/promo/promo-01.jpg'),
         note: '把第 1 张创意宣传图片放到 public/images/promo/promo-01.jpg 后即可显示。',
       },
       {
         title: '主视觉 KV',
         meta: 'CAMPAIGN KV',
-        src: '/images/promo/promo-02.jpg',
+        src: assetPath('/images/promo/promo-02.jpg'),
         note: '把第 2 张创意宣传图片放到 public/images/promo/promo-02.jpg 后即可显示。',
       },
       {
         title: '社交媒体海报',
         meta: 'SOCIAL MEDIA',
-        src: '/images/promo/promo-03.jpg',
+        src: assetPath('/images/promo/promo-03.jpg'),
         note: '把第 3 张创意宣传图片放到 public/images/promo/promo-03.jpg 后即可显示。',
       },
       {
         title: '物料延展',
         meta: 'VISUAL EXTENSION',
-        src: '/images/promo/promo-04.jpg',
+        src: assetPath('/images/promo/promo-04.jpg'),
         note: '把第 4 张创意宣传图片放到 public/images/promo/promo-04.jpg 后即可显示。',
       },
     ],
@@ -468,15 +481,17 @@ function VideoShowcaseModal({ open, videos, activeIndex, onSelect, onClose }) {
             {canPlayVideo ? (
               <video
                 key={activeVideo.src}
-                src={activeVideo.src}
                 controls
                 controlsList="nodownload noplaybackrate"
                 disablePictureInPicture
                 playsInline
-                preload="metadata"
+                preload="none"
+                poster={activeVideo.poster}
                 onContextMenu={(event) => event.preventDefault()}
                 onError={() => setVideoErrors((current) => ({ ...current, [activeIndex]: true }))}
-              />
+              >
+                <source src={activeVideo.src} type="video/mp4" />
+              </video>
             ) : (
               <div className="video-placeholder">
                 <i />
@@ -912,8 +927,8 @@ function App() {
       </header>
 
       <section className="hero" id="home">
-        <video className="hero-video-bg" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
-          <source src="/videos/hero-background.mp4" type="video/mp4" />
+        <video className="hero-video-bg" autoPlay muted loop playsInline preload="metadata" poster={assetPath('/videos/posters/hero-background.jpg')} aria-hidden="true">
+          <source src={assetPath('/videos/hero-background.mp4')} type="video/mp4" />
         </video>
         <PhotoshopBar />
         <div className="hero-transition" aria-hidden="true" />

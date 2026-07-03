@@ -1,0 +1,12 @@
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/videos/*.mp4
+  Content-Type: video/mp4
+  Cache-Control: public, max-age=31536000, immutable
