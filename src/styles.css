@@ -2534,7 +2534,7 @@ body.modal-open {
   backdrop-filter: blur(12px);
 }
 .capability-card:nth-child(-n+2) .capability-bubble-menu em:nth-child(3) {
-  --bubble-rot: -15deg;
+  --bubble-rot: 8deg;
   --bubble-x: clamp(78px, 6.6vw, 118px);
   --bubble-y: 2px;
 }
