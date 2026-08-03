@@ -154,38 +154,30 @@ const projects = [
   },
 ]
 
-const aigcVideos = [
+const aigcImages = [
   {
     label: '落地项目',
     title: '西游后传天地重光',
     meta: '西游记衍生AI漫剧',
-    src: assetPath('/videos/aigc-01.mp4'),
-    poster: assetPath('/videos/posters/aigc-01.jpg'),
-    note: '视频文件暂时无法加载，请确认 public/videos/aigc-01.mp4 是否存在。',
+    src: assetPath('/images/aigc/aigc-01.jpg'),
   },
   {
     label: 'DEMO',
     title: '西游后传天地重光',
     meta: '打斗抽卡测试',
-    src: assetPath('/videos/aigc-02.mp4'),
-    poster: assetPath('/videos/posters/aigc-02.jpg'),
-    note: '视频文件暂时无法加载，请确认 public/videos/aigc-02.mp4 是否存在。',
+    src: assetPath('/images/aigc/aigc-02.jpg'),
   },
   {
     label: 'DEMO',
     title: '公爹为夫密林场景',
     meta: '场景情绪渲染测试',
-    src: assetPath('/videos/aigc-03.mp4'),
-    poster: assetPath('/videos/posters/aigc-03.jpg'),
-    note: '视频文件暂时无法加载，请确认 public/videos/aigc-03.mp4 是否存在。',
+    src: assetPath('/images/aigc/aigc-03.jpg'),
   },
   {
     label: 'DEMO',
     title: '洪荒',
     meta: '剧本测试',
-    src: assetPath('/videos/aigc-04.mp4'),
-    poster: assetPath('/videos/posters/aigc-04.jpg'),
-    note: '视频文件暂时无法加载，请确认 public/videos/aigc-04.mp4 是否存在。',
+    src: assetPath('/images/aigc/aigc-04.jpg'),
   },
 ]
 
@@ -225,6 +217,13 @@ const brandVisualImages = [
 ]
 
 const galleryProjects = {
+  '01': {
+    eyebrow: 'AIGC IMAGE SHOWCASE',
+    title: 'AIGC动画视觉',
+    description: '以关键帧、场景氛围与角色视觉为核心，集中展示 AIGC 动画项目中的代表画面与视觉测试。',
+    tags: ['AIGC', 'KEY VISUAL', 'STORY FRAME'],
+    images: aigcImages,
+  },
   '02': {
     eyebrow: 'BRAND VISUAL CASE',
     title: 'AIGC与品牌视觉',
@@ -702,74 +701,6 @@ function WorksOrbitShowcase() {
   )
 }
 
-function VideoShowcaseModal({ open, videos, activeIndex, onSelect, onClose }) {
-  const [videoErrors, setVideoErrors] = useState({})
-
-  useEffect(() => {
-    if (open) setVideoErrors({})
-  }, [open])
-
-  if (!open) return null
-  const activeVideo = videos[activeIndex] || videos[0]
-  const canPlayVideo = activeVideo.src && !videoErrors[activeIndex]
-
-  return (
-    <div className="video-modal" role="dialog" aria-modal="true" aria-label="AIGC 视频展示">
-      <button className="video-modal-backdrop" type="button" onClick={onClose} aria-label="关闭视频展示" />
-      <div className="video-modal-panel">
-        <div className="video-modal-top">
-          <div>
-            <span>AIGC VIDEO SHOWCASE</span>
-            <h3>{activeVideo.title}</h3>
-          </div>
-          <button className="video-close" type="button" onClick={onClose} aria-label="关闭">×</button>
-        </div>
-
-        <div className="video-modal-body">
-          <div className="video-stage">
-            {canPlayVideo ? (
-              <video
-                key={activeVideo.src}
-                controls
-                controlsList="nodownload noplaybackrate"
-                disablePictureInPicture
-                playsInline
-                preload="none"
-                poster={activeVideo.poster}
-                onContextMenu={(event) => event.preventDefault()}
-                onError={() => setVideoErrors((current) => ({ ...current, [activeIndex]: true }))}
-              >
-                <source src={activeVideo.src} type="video/mp4" />
-              </video>
-            ) : (
-              <div className="video-placeholder">
-                <i />
-                <strong>VIDEO SLOT</strong>
-                <p>{activeVideo.note}</p>
-              </div>
-            )}
-          </div>
-
-          <div className="video-playlist" aria-label="视频列表">
-            {videos.map((video, index) => (
-              <button
-                className={index === activeIndex ? 'active' : ''}
-                key={video.title}
-                type="button"
-                onClick={() => onSelect(index)}
-              >
-                <span>{String(index + 1).padStart(2, '0')}{video.label ? <b>{video.label}</b> : null}</span>
-                <strong>{video.title}</strong>
-                <em>{video.meta}</em>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function ImageShowcaseModal({ open, gallery, activeIndex, onSelect, onClose }) {
   const [imageErrors, setImageErrors] = useState({})
   const [zoomImageIndex, setZoomImageIndex] = useState(null)
@@ -986,8 +917,6 @@ function ImageShowcaseModal({ open, gallery, activeIndex, onSelect, onClose }) {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [navScrolled, setNavScrolled] = useState(false)
-  const [videoModalOpen, setVideoModalOpen] = useState(false)
-  const [activeVideoIndex, setActiveVideoIndex] = useState(0)
   const [galleryModalOpen, setGalleryModalOpen] = useState(false)
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0)
   const [activeGalleryProjectId, setActiveGalleryProjectId] = useState('02')
@@ -1087,9 +1016,8 @@ function App() {
   }, [])
 
   useEffect(() => {
-    document.body.classList.toggle('modal-open', videoModalOpen || galleryModalOpen)
+    document.body.classList.toggle('modal-open', galleryModalOpen)
     const handleEscape = (event) => {
-      if (event.key === 'Escape') setVideoModalOpen(false)
       if (event.key === 'Escape') setGalleryModalOpen(false)
     }
     window.addEventListener('keydown', handleEscape)
@@ -1097,7 +1025,7 @@ function App() {
       document.body.classList.remove('modal-open')
       window.removeEventListener('keydown', handleEscape)
     }
-  }, [videoModalOpen, galleryModalOpen])
+  }, [galleryModalOpen])
 
   const scrollTo = (id) => {
     document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -1136,12 +1064,6 @@ function App() {
 
   const canOpenProject = (project) => project.id === '01' || Boolean(galleryProjects[project.id])
 
-  const openProjectVideos = (project) => {
-    if (project.id !== '01') return
-    setActiveVideoIndex(0)
-    setVideoModalOpen(true)
-  }
-
   const openProjectGallery = (project) => {
     if (!galleryProjects[project.id]) return
     setActiveGalleryProjectId(project.id)
@@ -1150,7 +1072,6 @@ function App() {
   }
 
   const openProjectShowcase = (project) => {
-    if (project.id === '01') openProjectVideos(project)
     if (galleryProjects[project.id]) openProjectGallery(project)
   }
 
@@ -1493,13 +1414,6 @@ function App() {
         </div>
       </footer>
 
-      <VideoShowcaseModal
-        open={videoModalOpen}
-        videos={aigcVideos}
-        activeIndex={activeVideoIndex}
-        onSelect={setActiveVideoIndex}
-        onClose={() => setVideoModalOpen(false)}
-      />
       <ImageShowcaseModal
         open={galleryModalOpen}
         gallery={galleryProjects[activeGalleryProjectId]}
