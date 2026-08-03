@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import BorderGlow from './components/BorderGlow'
 import MagicRings from './components/MagicRings'
 import ColorBends from './components/ColorBends'
@@ -187,6 +187,14 @@ const aigcVideos = [
     poster: assetPath('/videos/posters/aigc-04.jpg'),
     note: '视频文件暂时无法加载，请确认 public/videos/aigc-04.mp4 是否存在。',
   },
+]
+
+const orbitShowcaseVideos = [
+  { title: 'Visual Film 01', src: assetPath('/videos/aigc-01.mp4'), poster: assetPath('/videos/posters/aigc-01.jpg'), accent: '#60dcff' },
+  { title: 'Visual Film 02', src: assetPath('/videos/aigc-02.mp4'), poster: assetPath('/videos/posters/aigc-02.jpg'), accent: '#ff7d62' },
+  { title: 'Visual Film 03', src: assetPath('/videos/aigc-03.mp4'), poster: assetPath('/videos/posters/aigc-03.jpg'), accent: '#c6ff6e' },
+  { title: 'Visual Film 04', src: assetPath('/videos/aigc-04.mp4'), poster: assetPath('/videos/posters/aigc-04.jpg'), accent: '#ffd166' },
+  { title: 'Visual Film 05', src: assetPath('/videos/aigc-05.mp4'), accent: '#b18cff' },
 ]
 
 const brandVisualImages = [
@@ -449,6 +457,247 @@ function ProjectVisual({ project }) {
       <div className="orbit orbit-two" />
       {project.tag ? <span className="visual-tag">{project.tag}</span> : null}
       <span className="visual-coordinate">23°07′ N / 113°15′ E</span>
+    </div>
+  )
+}
+
+function WorksOrbitShowcase() {
+  const orbitRef = useRef(null)
+  const modalOpenRef = useRef(false)
+  const [activeOrbitVideoIndex, setActiveOrbitVideoIndex] = useState(null)
+  const activeOrbitVideo = activeOrbitVideoIndex === null ? null : orbitShowcaseVideos[activeOrbitVideoIndex]
+
+  const closeOrbitVideo = () => {
+    modalOpenRef.current = false
+    setActiveOrbitVideoIndex(null)
+  }
+
+  const openOrbitVideo = (index) => {
+    modalOpenRef.current = true
+    orbitRef.current?.querySelectorAll('video').forEach((video) => video.pause())
+    setActiveOrbitVideoIndex(index)
+  }
+
+  useEffect(() => {
+    document.body.classList.toggle('modal-open', activeOrbitVideoIndex !== null)
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') closeOrbitVideo()
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => {
+      document.body.classList.remove('modal-open')
+      window.removeEventListener('keydown', handleEscape)
+    }
+  }, [activeOrbitVideoIndex])
+
+  useEffect(() => {
+    const rootEl = orbitRef.current
+    if (!rootEl) return undefined
+
+    const cards = [...rootEl.querySelectorAll('.portfolio-orbit-card')]
+    const items = cards.map((card, index) => ({
+      card,
+      video: card.querySelector('video'),
+      angle: (Math.PI * 2 * index) / cards.length,
+      active: false,
+      previewing: false,
+    }))
+
+    const state = {
+      mx: 0,
+      my: 0,
+      tx: 0,
+      ty: 0,
+      orbitTime: 0,
+      lastFrame: performance.now(),
+      paused: false,
+    }
+
+    const updatePointer = (event) => {
+      state.tx = (event.clientX / window.innerWidth - 0.5) * 2
+      state.ty = (event.clientY / window.innerHeight - 0.5) * 2
+      document.documentElement.style.setProperty('--page-raster-x', `${event.clientX}px`)
+      document.documentElement.style.setProperty('--page-raster-y', `${event.clientY}px`)
+    }
+
+    const resetPointer = () => {
+      state.tx = 0
+      state.ty = 0
+      document.documentElement.style.setProperty('--page-raster-x', '50vw')
+      document.documentElement.style.setProperty('--page-raster-y', '50vh')
+    }
+
+    const activateCard = (card) => {
+      state.paused = true
+      items.forEach((item) => {
+        const active = item.card === card
+        item.active = active
+        item.card.classList.toggle('is-active', active)
+        if (!item.video) return
+        if (active) {
+          item.video.currentTime = 0
+          item.video.muted = true
+          item.video.play().catch(() => {})
+        } else {
+          item.video.pause()
+        }
+      })
+    }
+
+    const deactivateCards = () => {
+      state.paused = false
+      items.forEach((item) => {
+        item.active = false
+        item.card.classList.remove('is-active')
+      })
+    }
+
+    const listeners = items.map((item) => {
+      const enter = () => activateCard(item.card)
+      const leave = () => deactivateCards()
+      item.card.addEventListener('pointerenter', enter)
+      item.card.addEventListener('pointerleave', leave)
+      return { item, enter, leave }
+    })
+
+    window.addEventListener('pointermove', updatePointer)
+    window.addEventListener('pointerleave', resetPointer)
+
+    let raf = 0
+    const animate = (now) => {
+      const delta = Math.min((now - state.lastFrame) / 1000, 0.05)
+      state.lastFrame = now
+      if (!state.paused && !modalOpenRef.current) state.orbitTime += delta
+
+      state.mx += (state.tx - state.mx) * 0.075
+      state.my += (state.ty - state.my) * 0.075
+      rootEl.style.setProperty('--orbit-mx', state.mx.toFixed(3))
+      rootEl.style.setProperty('--orbit-my', state.my.toFixed(3))
+
+      const radiusX = Math.min(window.innerWidth * 0.44, 760)
+      const radiusY = Math.min(window.innerHeight * 0.018, 14)
+      const radiusZ = Math.min(window.innerWidth * 0.3, 430)
+
+      items.forEach((item) => {
+        const a = item.angle + state.orbitTime * 0.11
+        const depth = Math.sin(a)
+        const side = Math.cos(a)
+        const pitch = Math.sin(a * 2)
+        const sideAmount = Math.abs(side)
+        const z = depth * radiusZ
+        const front = (z + radiusZ) / (radiusZ * 2)
+        const frontCurve = Math.max(0, front - 0.45) / 0.55
+        const x = side * radiusX + state.mx * 38
+        const y = pitch * radiusY * (1 - frontCurve * 0.9) + state.my * 22
+        const scale = 0.66 + front * 0.34
+        const rawTubeTurn = side * (42 + sideAmount * 52) * (1 - frontCurve * 0.38)
+        const tubeTurn = Math.max(-82, Math.min(82, rawTubeTurn))
+        const compression = Math.max(0.24, 1 - Math.pow(sideAmount, 1.1) * 0.68 - Math.max(0, 0.48 - front) * 0.1)
+        const edgeDrift = side * sideAmount * 8
+        const backFade = Math.max(0, 0.5 - front) / 0.5
+        const bend = Math.pow(sideAmount, 1.35) * (5.5 + backFade * 5)
+        const shade = Math.min(0.62, sideAmount * 0.18 + backFade * 0.42)
+        const brightness = 0.72 + front * 0.36
+        const blur = Math.max(0, 0.45 - front) * 2.4
+
+        item.card.style.setProperty('--tube-shade', shade.toFixed(3))
+        item.card.style.setProperty('--edge-x', `${50 + side * 50}%`)
+        item.card.style.transformOrigin = `${50 - side * sideAmount * 18}% 50%`
+        item.card.style.clipPath = side >= 0
+          ? `polygon(0 0, calc(100% - ${bend.toFixed(2)}%) 0, 100% 50%, calc(100% - ${bend.toFixed(2)}%) 100%, 0 100%)`
+          : `polygon(${bend.toFixed(2)}% 0, 100% 0, 100% 100%, ${bend.toFixed(2)}% 100%, 0 50%)`
+        item.card.style.transform = `
+          translate(-50%, -50%)
+          translate3d(${x + edgeDrift}px, ${y}px, ${z}px)
+          rotateY(${tubeTurn.toFixed(2)}deg)
+          rotateZ(-10deg)
+          scaleX(${compression.toFixed(3)})
+          scale(${scale.toFixed(3)})
+        `
+        item.card.style.opacity = '1'
+        item.card.style.filter = `brightness(${brightness.toFixed(3)}) blur(${blur.toFixed(2)}px)`
+        item.card.style.zIndex = String(Math.round(front * 220) + 20)
+
+        const shouldPreview = !modalOpenRef.current && (item.active || front > 0.58)
+        if (item.video && shouldPreview !== item.previewing) {
+          item.previewing = shouldPreview
+          if (shouldPreview) {
+            item.video.muted = true
+            item.video.play().catch(() => {})
+          } else {
+            item.video.pause()
+          }
+        }
+      })
+
+      raf = requestAnimationFrame(animate)
+    }
+
+    raf = requestAnimationFrame(animate)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('pointermove', updatePointer)
+      window.removeEventListener('pointerleave', resetPointer)
+      listeners.forEach(({ item, enter, leave }) => {
+        item.card.removeEventListener('pointerenter', enter)
+        item.card.removeEventListener('pointerleave', leave)
+        item.video?.pause()
+      })
+    }
+  }, [])
+
+  return (
+    <div className="portfolio-orbit-showcase" ref={orbitRef} aria-label="3D video orbit showcase">
+      <div className="portfolio-orbit-glow" aria-hidden="true" />
+      <div className="portfolio-orbit-stage">
+        <div className="portfolio-orbit-core" aria-hidden="true">
+          <span />
+          <i />
+        </div>
+        {orbitShowcaseVideos.map((video, index) => (
+          <article
+            className="portfolio-orbit-card"
+            key={`${video.src}-${index}`}
+            style={{ '--accent': video.accent }}
+            role="button"
+            tabIndex={0}
+            onClick={() => openOrbitVideo(index)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') openOrbitVideo(index)
+            }}
+          >
+            <video muted loop playsInline preload="metadata" poster={video.poster}>
+              <source src={video.src} type="video/mp4" />
+            </video>
+          </article>
+        ))}
+      </div>
+      {activeOrbitVideo ? (
+        <div className="video-modal orbit-video-modal" role="dialog" aria-modal="true" aria-label="Orbit video player">
+          <button className="video-modal-backdrop" type="button" onClick={closeOrbitVideo} aria-label="Close video player" />
+          <div className="video-modal-panel orbit-video-panel">
+            <div className="video-modal-top">
+              <div>
+                <span>VISUAL SHOWCASE</span>
+                <h3>{activeOrbitVideo.title}</h3>
+              </div>
+              <button className="video-close" type="button" onClick={closeOrbitVideo} aria-label="Close">×</button>
+            </div>
+            <div className="orbit-video-player">
+              <video
+                key={`${activeOrbitVideo.src}-${activeOrbitVideoIndex}`}
+                src={activeOrbitVideo.src}
+                poster={activeOrbitVideo.poster}
+                controls
+                autoPlay
+                playsInline
+                preload="auto"
+              />
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -775,6 +1024,7 @@ function App() {
     const works = document.querySelector('#works')
     const strengths = document.querySelector('#strengths')
     const contact = document.querySelector('#contact')
+    const coconaBelt = document.querySelector('.cocona-belt')
     const motionSections = [hero, about, works, strengths, contact].filter(Boolean)
     if (!motionSections.length) return undefined
 
@@ -785,6 +1035,7 @@ function App() {
       works?.classList.add('works-visible')
       strengths?.classList.add('strengths-visible')
       contact?.classList.add('contact-visible')
+      coconaBelt?.classList.add('cocona-belt-visible')
       return undefined
     }
 
@@ -817,9 +1068,20 @@ function App() {
       rootMargin: '0px 0px -12% 0px',
     })
 
+    const beltObserver = coconaBelt ? new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('cocona-belt-visible', entry.isIntersecting)
+      })
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -10% 0px',
+    }) : null
+
     motionSections.forEach((section) => observer.observe(section))
+    if (coconaBelt && beltObserver) beltObserver.observe(coconaBelt)
     return () => {
       observer.disconnect()
+      beltObserver?.disconnect()
       document.documentElement.classList.remove('hero-visible')
     }
   }, [])
@@ -849,21 +1111,27 @@ function App() {
     const y = event.clientY - rect.top
     const offsetX = (x / rect.width - 0.5) * 2
     const offsetY = (y / rect.height - 0.5) * 2
+    const note = card.closest('.portrait-wrap')?.querySelector('.portrait-note')
 
     card.style.setProperty('--tilt-rx', `${(-offsetY * 8).toFixed(2)}deg`)
     card.style.setProperty('--tilt-ry', `${(offsetX * 10).toFixed(2)}deg`)
     card.style.setProperty('--tilt-scale', '1.035')
     card.style.setProperty('--glow-x', `${x}px`)
     card.style.setProperty('--glow-y', `${y}px`)
+    if (note) {
+      note.style.transform = `translate3d(${(offsetX * 10).toFixed(2)}px, ${(-offsetY * 5).toFixed(2)}px, 0) rotate(0deg)`
+    }
   }
 
   const resetPortraitTilt = (event) => {
     const card = event.currentTarget
+    const note = card.closest('.portrait-wrap')?.querySelector('.portrait-note')
     card.style.setProperty('--tilt-rx', '0deg')
     card.style.setProperty('--tilt-ry', '0deg')
     card.style.setProperty('--tilt-scale', '1')
     card.style.setProperty('--glow-x', '50%')
     card.style.setProperty('--glow-y', '28%')
+    if (note) note.style.transform = ''
   }
 
   const canOpenProject = (project) => project.id === '01' || Boolean(galleryProjects[project.id])
@@ -964,6 +1232,7 @@ function App() {
             className="portfolio-liquid-ether"
           />
         </div>
+        <div className="page-follow-raster" aria-hidden="true" />
 
       <section className="about section" id="about">
         <div className="shell">
@@ -971,6 +1240,11 @@ function App() {
           <div className="about-grid">
             <div className="portrait-wrap">
               <div className="portrait tilted-portrait" onPointerMove={handlePortraitTilt} onPointerLeave={resetPortraitTilt}>
+                <div className="portrait-ticket-rail" aria-hidden="true">
+                  <span>PROFILE</span>
+                  <i />
+                  <em>MAKE 2026</em>
+                </div>
                 <div className="portrait-halo" />
                 <img className="portrait-avatar" src="/about-avatar-chair.png" alt="黄子盈 3D 形象" loading="lazy" decoding="async" />
                 <div className="portrait-label">ZIYING HUANG<br />VISUAL & AI DESIGNER</div>
@@ -998,8 +1272,8 @@ function App() {
 
           <div className="timeline career-path">
             <div className="timeline-header">
-              <span>CAREER PATH</span>
               <h3>工作经历</h3>
+              <span>CAREER PATH</span>
             </div>
             <div className="career-track">
             {timeline.map((item, index) => (
@@ -1033,6 +1307,19 @@ function App() {
         </div>
       </section>
 
+      <div className="cocona-belt" aria-hidden="true">
+        <div className="cocona-belt-track">
+          {Array.from({ length: 24 }).map((_, index) => (
+            <span key={index}>COCONA</span>
+          ))}
+        </div>
+        <div className="cocona-belt-track cocona-belt-track-copy">
+          {Array.from({ length: 24 }).map((_, index) => (
+            <span key={index}>COCONA</span>
+          ))}
+        </div>
+      </div>
+
       <section className="works section" id="works">
         <div className="shell">
           <div className="section-kicker light"><span>03</span><p>视觉展示</p></div>
@@ -1051,6 +1338,9 @@ function App() {
               </div>
             </div>
             <p>一些关于速度、质感、内容与未来的视觉实验。<br />真实项目图片将在下一阶段替换。</p>
+          </div>
+          <div className="works-orbit-column">
+            <WorksOrbitShowcase />
           </div>
           <div className="projects-grid">
             {projects.map((project, index) => (

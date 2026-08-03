@@ -38,17 +38,7 @@
 }
 
 .liquid-ether-container::after {
-  left: -8%;
-  right: -8%;
-  top: 16%;
-  height: 68%;
-  opacity: .46;
-  background:
-    linear-gradient(112deg, transparent 0 18%, color-mix(in srgb, var(--ether-c2), transparent 78%) 29%, transparent 40% 54%, color-mix(in srgb, var(--ether-c4), transparent 80%) 66%, transparent 82%),
-    repeating-linear-gradient(105deg, transparent 0 72px, rgba(255,255,255,.028) 74px 75px, transparent 78px 150px);
-  filter: blur(12px);
-  transform: skewY(-8deg);
-  mix-blend-mode: screen;
+  content: none;
 }
 
 .ether-field {
@@ -90,14 +80,7 @@
 }
 
 .ether-vein {
-  left: -8%;
-  right: -8%;
-  height: 1px;
-  opacity: .24;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ether-c2), transparent 22%), color-mix(in srgb, var(--ether-c3), transparent 42%), transparent);
-  filter: blur(.4px) drop-shadow(0 0 18px color-mix(in srgb, var(--ether-c2), transparent 20%));
-  transform-origin: center;
-  mix-blend-mode: screen;
+  display: none;
 }
 
 .ether-vein-a {
