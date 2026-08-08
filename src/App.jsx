@@ -114,33 +114,37 @@ const CustomCursor = () => {
 const projects = [
   {
     id: '01',
-    title: 'AIGC动画',
-    type: 'AI ANIMATION',
+    title: '尤尼克斯羽毛球广告',
+    type: 'YONEX BADMINTON CAMPAIGN',
     caption: '为马拉松与越野赛事构建高能量视觉叙事，从主视觉延展至线上传播与文创物料。',
     tone: 'ember',
+    cover: '/images/projects/aigc-animation-athlete.png',
     tag: '',
     glow: '18 92 66',
     colors: ['#2e0d1f', '#cc5a8b', '#f8bfd2'],
   },
   {
     id: '02',
-    title: 'AIGC与品牌视觉',
-    type: 'AIGC & BRAND VISUAL',
+    title: '平凡夏日',
+    type: 'ORDINARY SUMMER',
     caption: '以生成式工作流重构产品场景、材质与光影，探索传统电商设计之外的视觉可能。',
     tone: 'violet',
+    cover: '/images/projects/ordinary-summer-cover.jpg',
     tag: '',
     glow: '270 88 78',
     colors: ['#a78bfa', '#e879f9', '#67e8f9'],
   },
   {
     id: '03',
-    title: '平面插画',
-    type: 'GRAPHIC ILLUSTRATION',
-    caption: '围绕品牌调性搭建可复用的图文模板与内容语言，让高频创意生产保持一致与鲜活。',
+    title: '挡在你身前',
+    type: 'STAND IN FRONT OF YOU',
+    caption: '以温暖叙事与人物关系为核心，用光影和拥抱构建具有保护感与情绪张力的视觉画面。',
     tone: 'blue',
+    cover: '/images/projects/stand-in-front-of-you.png',
+    coverPosition: '53% 50%',
     tag: '',
-    glow: '198 92 70',
-    colors: ['#38bdf8', '#818cf8', '#c084fc'],
+    glow: '338 72 70',
+    colors: ['#2e0d1f', '#cc5a8b', '#f3bd78'],
   },
   {
     id: '04',
@@ -148,6 +152,8 @@ const projects = [
     type: 'CREATIVE PROMOTION',
     caption: '从镜头语言、节奏到生成参数，设计 15–30 秒商业短片的完整视觉路径。',
     tone: 'silver',
+    cover: '/images/projects/creative-promotion-cover.jpg',
+    coverPosition: '48% center',
     tag: '',
     glow: '258 62 82',
     colors: ['#e2e8f0', '#a78bfa', '#67e8f9'],
@@ -182,11 +188,13 @@ const aigcImages = [
 ]
 
 const orbitShowcaseVideos = [
-  { title: 'Visual Film 01', src: assetPath('/videos/aigc-01.mp4'), poster: assetPath('/videos/posters/aigc-01.jpg'), accent: '#60dcff' },
-  { title: 'Visual Film 02', src: assetPath('/videos/aigc-02.mp4'), poster: assetPath('/videos/posters/aigc-02.jpg'), accent: '#ff7d62' },
-  { title: 'Visual Film 03', src: assetPath('/videos/aigc-03.mp4'), poster: assetPath('/videos/posters/aigc-03.jpg'), accent: '#c6ff6e' },
-  { title: 'Visual Film 04', src: assetPath('/videos/aigc-04.mp4'), poster: assetPath('/videos/posters/aigc-04.jpg'), accent: '#ffd166' },
-  { title: 'Visual Film 05', src: assetPath('/videos/aigc-05.mp4'), accent: '#b18cff' },
+  { title: '平凡夏日', eyebrow: 'ORDINARY SUMMER', src: assetPath('/videos/aigc-01.mp4'), poster: assetPath('/videos/posters/aigc-01.jpg'), accent: '#60dcff' },
+  { title: '尤尼克斯羽毛球广告', eyebrow: 'YONEX BADMINTON AD', src: assetPath('/videos/aigc-02.mp4'), poster: assetPath('/videos/posters/aigc-02.jpg'), accent: '#ff7d62' },
+  { title: '挡在你身前', eyebrow: 'STAND IN FRONT OF YOU', src: assetPath('/videos/aigc-03.mp4'), poster: assetPath('/videos/posters/aigc-03.jpg'), accent: '#c6ff6e' },
+  { title: '短剧打斗测试 DEMO', eyebrow: 'SHORT DRAMA COMBAT TEST DEMO', src: assetPath('/videos/aigc-04.mp4'), poster: assetPath('/videos/posters/aigc-04.jpg'), accent: '#ffd166' },
+  { title: 'LAMER 广告', eyebrow: 'LA MER AD', src: assetPath('/videos/aigc-05.mp4'), poster: assetPath('/videos/posters/aigc-05.jpg'), accent: '#b18cff' },
+  { title: '短漫测试 DEMO', eyebrow: 'SHORT COMIC TEST DEMO', src: assetPath('/videos/aigc-06.mp4'), poster: assetPath('/videos/posters/aigc-06.jpg'), accent: '#cc5a8b' },
+  { title: '汽车广告', eyebrow: 'AUTOMOTIVE AD', src: assetPath('/videos/aigc-07.mp4'), poster: assetPath('/videos/posters/aigc-07.jpg'), accent: '#f8bfd2' },
 ]
 
 const brandVisualImages = [
@@ -218,15 +226,19 @@ const brandVisualImages = [
 
 const galleryProjects = {
   '01': {
-    eyebrow: 'AIGC IMAGE SHOWCASE',
-    title: 'AIGC动画视觉',
+    eyebrow: 'YONEX BADMINTON CAMPAIGN',
+    title: '尤尼克斯羽毛球广告',
+    layout: 'long-scroll',
+      longImage: assetPath('/images/aigc/yonex-workflow-showcase-v2.jpg'),
     description: '以关键帧、场景氛围与角色视觉为核心，集中展示 AIGC 动画项目中的代表画面与视觉测试。',
     tags: ['AIGC', 'KEY VISUAL', 'STORY FRAME'],
     images: aigcImages,
   },
   '02': {
-    eyebrow: 'BRAND VISUAL CASE',
-    title: 'AIGC与品牌视觉',
+    eyebrow: 'ORDINARY SUMMER',
+    title: '平凡夏日',
+    layout: 'long-scroll',
+    longImage: assetPath('/images/projects/ordinary-summer-long-showcase.jpg'),
     description: '以生成式影像、品牌主视觉与电商内容为核心，搭建统一但具有延展性的视觉系统。这里适合放项目封面、过程图、细节图与最终落地画面。',
     tags: ['AIGC', 'BRAND', 'LAYOUT'],
     images: brandVisualImages,
@@ -339,6 +351,8 @@ const galleryProjects = {
   '04': {
     eyebrow: 'CREATIVE PROMOTION CASE',
     title: '创意宣传',
+    layout: 'long-scroll',
+    longImage: assetPath('/images/projects/creative-promotion-cover.jpg'),
     description: '从传播主题、视觉钩子到社交媒体触点，展示创意宣传项目中的主画面、系列 KV、活动延展与落地物料。',
     tags: ['CAMPAIGN', 'KV', 'PROMOTION'],
     images: [
@@ -368,6 +382,16 @@ const galleryProjects = {
       },
     ],
   },
+}
+
+galleryProjects['03'] = {
+  eyebrow: 'STAND IN FRONT OF YOU',
+  title: '挡在你身前',
+  layout: 'long-scroll',
+  longImage: assetPath('/images/projects/stand-in-front-long-showcase.jpg'),
+  description: '以姐妹之间的守护与陪伴为情绪核心，通过暖色逆光、拥抱动作和人物关系营造温柔而坚定的叙事画面。',
+  tags: ['STORY', 'CHARACTER', 'EMOTION'],
+  images: [],
 }
 
 const capabilityModules = [
@@ -447,7 +471,17 @@ const timeline = [
 
 function ProjectVisual({ project }) {
   return (
-    <div className={`project-visual ${project.tone}`}>
+    <div className={`project-visual ${project.tone} ${project.cover ? 'has-cover' : ''}`}>
+      {project.cover ? (
+        <img
+          className="project-cover-image"
+          src={assetPath(project.cover)}
+          alt={`${project.title}项目封面`}
+          style={{ objectPosition: project.coverPosition || undefined }}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : null}
       <div className="visual-no">{project.id}</div>
       <div className="visual-grid" />
       <div className="orb orb-main" />
@@ -516,7 +550,7 @@ function WorksOrbitShowcase() {
       state.tx = (event.clientX / window.innerWidth - 0.5) * 2
       state.ty = (event.clientY / window.innerHeight - 0.5) * 2
       document.documentElement.style.setProperty('--page-raster-x', `${event.clientX}px`)
-      document.documentElement.style.setProperty('--page-raster-y', `${event.clientY}px`)
+      document.documentElement.style.setProperty('--page-raster-y', `${window.scrollY + event.clientY}px`)
     }
 
     const resetPointer = () => {
@@ -573,9 +607,9 @@ function WorksOrbitShowcase() {
       rootEl.style.setProperty('--orbit-mx', state.mx.toFixed(3))
       rootEl.style.setProperty('--orbit-my', state.my.toFixed(3))
 
-      const radiusX = Math.min(window.innerWidth * 0.44, 760)
+      const radiusX = Math.min(window.innerWidth * 0.44 + 50, 810)
       const radiusY = Math.min(window.innerHeight * 0.018, 14)
-      const radiusZ = Math.min(window.innerWidth * 0.3, 430)
+      const radiusZ = Math.min(window.innerWidth * 0.3 + 50, 480)
 
       items.forEach((item) => {
         const a = item.angle + state.orbitTime * 0.11
@@ -678,7 +712,7 @@ function WorksOrbitShowcase() {
           <div className="video-modal-panel orbit-video-panel">
             <div className="video-modal-top">
               <div>
-                <span>VISUAL SHOWCASE</span>
+                <span>{activeOrbitVideo.eyebrow || 'VISUAL SHOWCASE'}</span>
                 <h3>{activeOrbitVideo.title}</h3>
               </div>
               <button className="video-close" type="button" onClick={closeOrbitVideo} aria-label="Close">×</button>
@@ -713,13 +747,15 @@ function ImageShowcaseModal({ open, gallery, activeIndex, onSelect, onClose }) {
   }, [open])
 
   if (!open) return null
+  if (!gallery) return null
   const images = gallery?.images || []
-  const activeImage = images[activeIndex] || images[0]
-  if (!activeImage) return null
-  const canShowImage = activeImage.src && !imageErrors[activeIndex]
   const isSliderLayout = gallery.layout === 'slider'
   const isShuffleLayout = gallery.layout === 'shuffle'
   const isPetalLayout = gallery.layout === 'petal'
+  const isLongScrollLayout = gallery.layout === 'long-scroll'
+  const activeImage = images[activeIndex] || images[0]
+  if (!isLongScrollLayout && !activeImage) return null
+  const canShowImage = Boolean(activeImage?.src && !imageErrors[activeIndex])
   const goToPrevImage = () => onSelect((activeIndex - 1 + images.length) % images.length)
   const goToNextImage = () => onSelect((activeIndex + 1) % images.length)
   const shuffleStack = [0, 1, 2].map((offset) => {
@@ -775,7 +811,7 @@ function ImageShowcaseModal({ open, gallery, activeIndex, onSelect, onClose }) {
   return (
     <div className="video-modal gallery-modal" role="dialog" aria-modal="true" aria-label={`${gallery.title} 图片展示`}>
       <button className="video-modal-backdrop" type="button" onClick={onClose} aria-label="关闭图片展示" />
-      <div className={`video-modal-panel gallery-panel ${isPetalLayout ? 'is-petal-panel' : ''}`}>
+      <div className={`video-modal-panel gallery-panel ${isPetalLayout ? 'is-petal-panel' : ''} ${isLongScrollLayout ? 'is-long-scroll-panel' : ''}`}>
         <div className={`video-modal-top ${isPetalLayout ? 'is-compact' : ''}`}>
           <div>
             <span>{gallery.eyebrow}</span>
@@ -784,9 +820,18 @@ function ImageShowcaseModal({ open, gallery, activeIndex, onSelect, onClose }) {
           <button className="video-close" type="button" onClick={onClose} aria-label="关闭">×</button>
         </div>
 
-        <div className={`gallery-body ${isSliderLayout ? 'is-slider' : ''} ${isShuffleLayout ? 'is-shuffle' : ''} ${isPetalLayout ? 'is-petal' : ''}`}>
+        <div className={`gallery-body ${isSliderLayout ? 'is-slider' : ''} ${isShuffleLayout ? 'is-shuffle' : ''} ${isPetalLayout ? 'is-petal' : ''} ${isLongScrollLayout ? 'is-long-scroll' : ''}`}>
           <div className="gallery-stage">
-            {isSliderLayout ? (
+            {isLongScrollLayout ? (
+              <div className="long-scroll-showcase" aria-label={`${gallery.title}长图展示`}>
+                <img
+                  src={gallery.longImage}
+                  alt={`${gallery.title}项目长图`}
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            ) : isSliderLayout ? (
               <div className="illustration-slider" aria-label="平面插画滑动图片展示">
                 <div className="illustration-track" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
                   {images.map((image, index) => (
@@ -862,7 +907,7 @@ function ImageShowcaseModal({ open, gallery, activeIndex, onSelect, onClose }) {
             )}
           </div>
 
-          {!isPetalLayout ? <aside className="gallery-info">
+          {!isPetalLayout && !isLongScrollLayout ? <aside className="gallery-info">
             <span className="gallery-index">{String(activeIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</span>
             <h4>{activeImage.title}</h4>
             <p>{gallery.description}</p>
@@ -871,7 +916,7 @@ function ImageShowcaseModal({ open, gallery, activeIndex, onSelect, onClose }) {
             </div>
           </aside> : null}
 
-          {!isSliderLayout && !isShuffleLayout && !isPetalLayout ? (
+          {!isSliderLayout && !isShuffleLayout && !isPetalLayout && !isLongScrollLayout ? (
             <div className="gallery-thumbs" aria-label="图片列表">
               {images.map((image, index) => (
                 <button
@@ -1370,6 +1415,7 @@ function App() {
       </div>
 
       <footer className="contact" id="contact">
+        <div className="page-follow-raster contact-follow-raster" aria-hidden="true" />
         <div className="contact-rings" aria-hidden="true">
           <MagicRings
             color="#cc5a8b"

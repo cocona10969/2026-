@@ -1032,7 +1032,13 @@ svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-l
 .about.about-motion-ready .career-track article:nth-child(2) .career-node { transition-delay: 1.42s; }
 .about.about-motion-ready .career-track article:nth-child(3) .career-node { transition-delay: 1.58s; }
 
-.works { position: relative; border-bottom: 0; background: linear-gradient(180deg, rgba(8,4,9,.98) 0%, rgba(8,4,9,.96) 44%, rgba(8,4,9,.88) 100%); }
+.works {
+  position: relative;
+  border-bottom: 0;
+  background:
+    radial-gradient(ellipse at 72% 24%, rgba(248,191,210,.07), transparent 36%),
+    linear-gradient(180deg, rgba(8,4,9,.78) 0%, rgba(46,13,31,.44) 35%, rgba(8,4,9,.72) 100%);
+}
 .works::before,
 .works::after {
   content: '';
@@ -1049,6 +1055,7 @@ svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-l
   content: none;
 }
 .works::after {
+  content: none;
   right: clamp(-520px, -28vw, -290px);
   bottom: clamp(-470px, -25vw, -300px);
   width: clamp(720px, 56vw, 1080px);
@@ -1189,14 +1196,17 @@ svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-l
 .portfolio-orbit-showcase::before {
   content: '';
   position: absolute;
-  inset: 4% -8% 8%;
+  inset: -34% -48% -30%;
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 50%, rgba(93,209,255,.24), transparent 24rem),
-    radial-gradient(circle at 28% 24%, rgba(204,90,139,.12), transparent 18rem),
-    radial-gradient(circle at 78% 76%, rgba(198,255,110,.1), transparent 19rem);
-  filter: blur(10px);
+    radial-gradient(ellipse 58% 48% at 50% 50%, rgba(93,209,255,.2), transparent 72%),
+    radial-gradient(ellipse 48% 42% at 27% 28%, rgba(204,90,139,.16), transparent 76%),
+    radial-gradient(ellipse 48% 44% at 78% 74%, rgba(198,255,110,.09), transparent 78%);
+  filter: blur(28px);
+  opacity: .92;
+  -webkit-mask-image: radial-gradient(ellipse 82% 76% at 50% 50%, #000 0 44%, rgba(0,0,0,.72) 68%, transparent 100%);
+  mask-image: radial-gradient(ellipse 82% 76% at 50% 50%, #000 0 44%, rgba(0,0,0,.72) 68%, transparent 100%);
   transition: opacity .25s ease;
 }
 
@@ -1276,7 +1286,13 @@ svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-l
   opacity: 1;
   overflow: hidden;
   background: #050508;
-  box-shadow: 0 34px 48px -30px rgba(0,0,0,.72), 0 18px 30px -26px color-mix(in srgb, var(--accent), transparent 35%);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.5),
+    inset 0 0 0 1px rgba(0,0,0,.42),
+    inset 0 0 22px rgba(0,0,0,.24),
+    0 16px 26px -18px rgba(0,0,0,.66),
+    0 34px 48px -30px rgba(0,0,0,.72),
+    0 18px 30px -26px color-mix(in srgb, var(--accent), transparent 35%);
   transform-style: preserve-3d;
   will-change: transform, filter, clip-path;
   cursor: pointer;
@@ -1707,6 +1723,73 @@ svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-l
 .works .project-visual {
   background:
     linear-gradient(155deg, rgba(248,191,210,.42) 0%, rgba(204,90,139,.2) 34%, rgba(46,13,31,.88) 100%);
+}
+
+.works .project-cover-image {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 45% 50%;
+  filter: brightness(.7) saturate(.72) contrast(1.08) sepia(.08);
+  transform: scale(1.05);
+  transition:
+    transform .9s cubic-bezier(.19,1,.22,1),
+    object-position .9s cubic-bezier(.19,1,.22,1),
+    filter .75s ease;
+}
+
+.works .project-visual.has-cover::before {
+  z-index: 2;
+  background:
+    linear-gradient(110deg, rgba(46,13,31,.42) 0%, transparent 44%, rgba(46,13,31,.18) 100%),
+    linear-gradient(180deg, rgba(20,7,16,.12), rgba(46,13,31,.2) 46%, rgba(8,4,9,.74) 100%);
+  opacity: 1;
+}
+
+.works .project-card:first-child:hover .project-cover-image,
+.works .project-card:first-child:focus-within .project-cover-image {
+  object-position: 43% 50%;
+  filter: brightness(.82) saturate(.82) contrast(1.06) sepia(.05);
+  transform: scale(1.01);
+}
+
+.works .project-card:nth-child(2) .project-cover-image {
+  object-position: 38% 50%;
+  filter: brightness(.76) saturate(.82) contrast(1.06);
+  transform: scale(1.08);
+}
+
+.works .project-card:nth-child(2):hover .project-cover-image,
+.works .project-card:nth-child(2):focus-within .project-cover-image {
+  object-position: 34% 50%;
+  filter: brightness(.88) saturate(.9) contrast(1.04);
+  transform: scale(1.02);
+}
+
+.works .project-card:nth-child(2) .project-visual.has-cover::before {
+  background:
+    linear-gradient(110deg, rgba(46,13,31,.16) 0%, transparent 46%, rgba(46,13,31,.18) 100%),
+    linear-gradient(180deg, rgba(20,7,16,.08), rgba(46,13,31,.12) 48%, rgba(8,4,9,.78) 100%);
+}
+
+.works .project-card:nth-child(3) .project-cover-image {
+  filter: brightness(.76) saturate(.88) contrast(1.04);
+  transform: scale(1.04);
+}
+
+.works .project-card:nth-child(3):hover .project-cover-image,
+.works .project-card:nth-child(3):focus-within .project-cover-image {
+  filter: brightness(.9) saturate(.96) contrast(1.03);
+  transform: scale(1.01);
+}
+
+.works .project-card:nth-child(3) .project-visual.has-cover::before {
+  background:
+    linear-gradient(110deg, rgba(46,13,31,.14) 0%, transparent 48%, rgba(46,13,31,.16) 100%),
+    linear-gradient(180deg, rgba(20,7,16,.06), rgba(46,13,31,.1) 50%, rgba(8,4,9,.78) 100%);
 }
 
 .works .project-card:nth-child(1) .project-visual {
@@ -2146,6 +2229,54 @@ body.modal-open {
   grid-template-columns: 1fr;
   grid-template-areas: "stage";
   padding-top: 8px;
+}
+
+.gallery-panel.is-long-scroll-panel {
+  width: min(1040px, 92vw);
+}
+
+.gallery-body.is-long-scroll {
+  display: block;
+  padding: clamp(14px, 1.8vw, 24px);
+}
+
+.gallery-body.is-long-scroll .gallery-stage {
+  height: min(68vh, 720px);
+  min-height: 520px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-color: rgba(248,191,210,.18);
+  background: #140912;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(204,90,139,.72) rgba(255,255,255,.05);
+}
+
+.gallery-body.is-long-scroll .gallery-stage::-webkit-scrollbar {
+  width: 8px;
+}
+
+.gallery-body.is-long-scroll .gallery-stage::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(204,90,139,.72);
+}
+
+.gallery-body.is-long-scroll .gallery-stage::after {
+  content: none;
+}
+
+.long-scroll-showcase {
+  width: 100%;
+  min-height: 100%;
+  background: #140912;
+}
+
+.gallery-stage .long-scroll-showcase img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  object-fit: contain;
+  filter: saturate(.94) contrast(1.04) brightness(.92);
 }
 
 .gallery-stage {
@@ -2768,14 +2899,13 @@ body.modal-open {
 .strengths {
   position: relative;
   min-height: calc(100vh - 100px);
-  padding: clamp(112px, 8vw, 140px) 0 max(0px, calc(clamp(112px, 8vw, 140px) - 130px));
+  padding: calc(clamp(112px, 8vw, 140px) + 50px) 0 max(0px, calc(clamp(112px, 8vw, 140px) - 130px));
   overflow: visible;
   color: var(--paper);
   border-bottom: 0;
   background:
-    radial-gradient(ellipse at 70% 22%, rgba(248,191,210,.08), transparent 38%),
-    radial-gradient(ellipse at 24% 64%, rgba(204,90,139,.08), transparent 44%),
-    linear-gradient(180deg, rgba(8,4,9,.66) 0%, rgba(46,13,31,.36) 48%, rgba(8,4,9,.76) 100%);
+    radial-gradient(ellipse at 72% 24%, rgba(248,191,210,.07), transparent 36%),
+    linear-gradient(180deg, rgba(8,4,9,.78) 0%, rgba(46,13,31,.44) 35%, rgba(8,4,9,.72) 100%);
 }
 .strengths::before {
   content: none;
@@ -3356,7 +3486,19 @@ body.modal-open {
   mix-blend-mode: normal;
 }
 
-.contact { min-height: 100vh; position: relative; overflow: hidden; margin-top: -1px; background: radial-gradient(ellipse at 50% 48%, rgba(204,90,139,.2) 0, rgba(46,13,31,.56) 38%, rgba(8,4,9,.88) 72%); isolation: isolate; }
+.contact {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  margin-top: -1px;
+  background:
+    radial-gradient(ellipse at 72% 24%, rgba(248,191,210,.07), transparent 36%),
+    linear-gradient(180deg, rgba(8,4,9,.78) 0%, rgba(46,13,31,.44) 35%, rgba(8,4,9,.72) 100%);
+  isolation: isolate;
+}
+.contact-follow-raster {
+  z-index: 1;
+}
 .contact-rings {
   position: absolute;
   z-index: 0;
