@@ -1238,7 +1238,10 @@ function App() {
 
           <div className="timeline career-path">
             <div className="timeline-header">
-              <h3>工作经历</h3>
+              <div className="career-heading-copy">
+                <h3>工作经历</h3>
+                <small>（可点击下方公司名查看工作内容）</small>
+              </div>
               <span>CAREER PATH</span>
             </div>
             <div className="career-track">

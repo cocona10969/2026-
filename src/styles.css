@@ -651,6 +651,8 @@ svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-l
 .timeline-header { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 70px; }
 .timeline-header span { font-size: 9px; letter-spacing: .18em; color: rgba(255,255,255,.42); font-weight: 600; }
 .timeline-header h3 { margin: -8px 0 0; font-family: 'Manrope', 'PingFang SC', sans-serif; font-size: clamp(25px, 2.35vw, 40px); font-weight: 300; letter-spacing: -.06em; color: rgba(255,255,255,.68); text-shadow: 0 0 26px rgba(204,90,139,.12); }
+.career-heading-copy { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.career-heading-copy small { color: rgba(255,255,255,.34); font-size: 11px; font-weight: 400; letter-spacing: .04em; white-space: nowrap; }
 .career-track { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(42px, 6vw, 120px); }
 .career-track::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(90deg, rgba(204,90,139,.12), rgba(204,90,139,.46) 18%, rgba(255,255,255,.2) 52%, rgba(204,90,139,.4) 84%, rgba(204,90,139,.1)); box-shadow: 0 0 18px rgba(204,90,139,.14); }
 .career-track article { position: relative; padding-top: 42px; min-height: 166px; }
