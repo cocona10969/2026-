@@ -1792,6 +1792,23 @@ svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-l
     linear-gradient(180deg, rgba(20,7,16,.06), rgba(46,13,31,.1) 50%, rgba(8,4,9,.78) 100%);
 }
 
+.works .project-card:nth-child(4) .project-cover-image {
+  filter: brightness(.74) saturate(.82) contrast(1.06);
+  transform: scale(1.08);
+}
+
+.works .project-card:nth-child(4):hover .project-cover-image,
+.works .project-card:nth-child(4):focus-within .project-cover-image {
+  filter: brightness(.9) saturate(.94) contrast(1.03);
+  transform: scale(1.01);
+}
+
+.works .project-card:nth-child(4) .project-visual.has-cover::before {
+  background:
+    linear-gradient(110deg, rgba(46,13,31,.12) 0%, transparent 50%, rgba(46,13,31,.14) 100%),
+    linear-gradient(180deg, rgba(20,7,16,.05), rgba(46,13,31,.12) 52%, rgba(8,4,9,.82) 100%);
+}
+
 .works .project-card:nth-child(1) .project-visual {
   background:
     radial-gradient(ellipse at 24% 18%, rgba(248,191,210,.34), transparent 42%),

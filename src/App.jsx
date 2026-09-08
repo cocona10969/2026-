@@ -153,7 +153,7 @@ const projects = [
     caption: '从镜头语言、节奏到生成参数，设计 15–30 秒商业短片的完整视觉路径。',
     tone: 'silver',
     cover: '/images/projects/creative-promotion-cover.jpg',
-    coverPosition: '48% center',
+    coverPosition: '50% 52%',
     tag: '',
     glow: '258 62 82',
     colors: ['#e2e8f0', '#a78bfa', '#67e8f9'],
@@ -352,7 +352,7 @@ const galleryProjects = {
     eyebrow: 'CREATIVE PROMOTION CASE',
     title: '创意宣传',
     layout: 'long-scroll',
-    longImage: assetPath('/images/projects/creative-promotion-cover.jpg'),
+    longImage: assetPath('/images/projects/creative-promotion-long-showcase.jpg'),
     description: '从传播主题、视觉钩子到社交媒体触点，展示创意宣传项目中的主画面、系列 KV、活动延展与落地物料。',
     tags: ['CAMPAIGN', 'KV', 'PROMOTION'],
     images: [
@@ -434,9 +434,9 @@ const capabilityModules = [
 
 const timeline = [
   {
-    date: '2025.10 — NOW',
+    date: '2025.10 — 2026.07',
     company: '中山蓓盾运动科技有限公司',
-    role: '平面设计师',
+    role: 'AI设计师',
     detail: '品牌视觉全案 / 赛事合作 / AIGC 产品影像 / 内容创意',
     duties: [
       '主导并独立执行核心营销节点的品牌视觉全案，运用 AI 辅助生成极具视觉冲击力的超高精度产品特写与海报，大幅提升电商平台及内容矩阵的点击与转化率。',
