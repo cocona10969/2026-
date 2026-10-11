@@ -1205,15 +1205,14 @@ function App() {
           <div className="section-kicker"><span>02</span><p>关于我</p></div>
           <div className="about-grid">
             <div className="portrait-wrap">
+              <div className="about-backdrop-title" aria-hidden="true">ABOUT ME</div>
               <div className="portrait tilted-portrait" onPointerMove={handlePortraitTilt} onPointerLeave={resetPortraitTilt}>
-                <div className="portrait-ticket-rail" aria-hidden="true">
-                  <span>PROFILE</span>
-                  <i />
-                  <em>MAKE 2026</em>
+                <div className="portrait-hanger" aria-hidden="true"><span className="portrait-strap" /><span className="portrait-clip"><i /></span></div>
+                <div className="portrait-card-surface">
+                  <div className="portrait-slot" aria-hidden="true" />
+                  <div className="portrait-photo"><img className="portrait-avatar" src="/about-avatar-chair.png" alt="黄子盈 3D 形象" loading="lazy" decoding="async" /></div>
+                  <div className="portrait-card-footer"><div className="portrait-label">VISUAL & AI DESIGNER<br /><span>ZIYING HUANG · PORTFOLIO 2026</span></div><span className="portrait-barcode" aria-hidden="true" /></div>
                 </div>
-                <div className="portrait-halo" />
-                <img className="portrait-avatar" src="/about-avatar-chair.png" alt="黄子盈 3D 形象" loading="lazy" decoding="async" />
-                <div className="portrait-label">ZIYING HUANG<br />VISUAL & AI DESIGNER</div>
               </div>
               <span className="portrait-note">梦想是去任何想去的地方，四面八方都是前方，不管往哪走都是向前走</span>
             </div>

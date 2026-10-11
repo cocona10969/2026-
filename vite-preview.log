@@ -1,0 +1,24 @@
+
+  VITE v8.2.1  ready in 260 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+  ➜  press h + enter to show help
+13:37:47 [vite] (client) hmr update /src/App.jsx
+13:37:47 [vite] (client) hmr update /src/styles.css
+
+Could not open node.js in the editor.
+
+13:38:03 [vite] (client) hmr update /src/App.jsx
+13:40:57 [vite] (client) hmr update /src/styles.css
+13:48:41 [vite] (client) hmr update /src/App.jsx
+13:48:41 [vite] (client) hmr update /src/styles.css
+13:48:55 [vite] (client) hmr update /src/styles.css
+13:54:37 [vite] (client) hmr update /src/styles.css
+13:54:53 [vite] (client) hmr update /src/styles.css
+14:37:03 [vite] (client) hmr update /src/App.jsx
+14:37:03 [vite] (client) hmr update /src/App.jsx
+14:37:03 [vite] (client) hmr update /src/styles.css
+14:37:39 [vite] (client) hmr update /src/App.jsx
+14:37:39 [vite] (client) hmr update /src/styles.css
+14:50:48 [vite] (client) hmr update /src/App.jsx
+14:50:48 [vite] (client) hmr update /src/styles.css

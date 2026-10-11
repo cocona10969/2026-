@@ -630,6 +630,73 @@ svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-l
   filter: saturate(.98) contrast(1.06) brightness(.96);
 }
 .portrait-wrap:has(.tilted-portrait:hover) .portrait-note { color: rgba(248,191,210,.72); }
+.portrait-wrap { margin-left: 0; padding-top: 130px; }
+.about-backdrop-title {
+  position: absolute; z-index: -1; top: -12px; left: -4vw;
+  width: max-content; pointer-events: none; user-select: none;
+  font-family: 'Manrope', sans-serif; font-size: clamp(76px, 9.5vw, 180px);
+  font-weight: 800; line-height: 1.05; letter-spacing: -.065em; word-spacing: .12em;
+  color: rgba(255,255,255,.25);
+  mask-image: linear-gradient(180deg, #000 20%, rgba(0,0,0,.7) 65%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 20%, rgba(0,0,0,.7) 65%, transparent 100%);
+}
+.portrait-wrap { isolation: isolate; }
+@media (max-width: 1000px) { .about-backdrop-title { left: -7%; font-size: clamp(70px, 13vw, 125px); } }
+.portrait {
+  height: auto; max-height: none; width: min(100%, 490px); aspect-ratio: .76;
+  overflow: visible; border: 0; border-radius: 14px; background: none; box-shadow: none;
+  transform-origin: 50% -110px; --ticket-rotate: -7deg;
+}
+.portrait::before, .portrait::after { content: none; }
+.portrait-card-surface {
+  position: absolute; inset: 0; padding: 32px 22px 22px; border-radius: 14px;
+  border: 1px solid rgba(255,226,238,.56);
+  background: linear-gradient(135deg, rgba(255,231,241,.27), rgba(248,191,210,.055) 35%, rgba(204,90,139,.12) 70%, rgba(255,231,241,.2));
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,.45), inset 0 0 28px rgba(248,191,210,.06), 18px 35px 65px rgba(0,0,0,.38);
+  display: flex; flex-direction: column;
+}
+.portrait-slot { position: absolute; width: 54px; height: 8px; top: 12px; left: calc(50% - 27px); border-radius: 8px; background: rgba(8,4,9,.8); box-shadow: 0 1px 0 rgba(255,255,255,.45); }
+.portrait-photo { position: relative; flex: 1; overflow: hidden; border: 1px solid rgba(255,226,238,.34); border-radius: 5px; background: radial-gradient(ellipse at 50% 30%, rgba(204,90,139,.28), rgba(19,9,17,.54) 80%); }
+.portrait .portrait-avatar { inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; transform: scale(1.65); transform-origin: 50% 24%; border-radius: 0; filter: saturate(.92) brightness(.95); }
+.portrait-card-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 22px; min-height: 62px; }
+.portrait .portrait-label { display: block; position: static; color: rgba(255,239,245,.92); font-size: 10px; font-weight: 600; letter-spacing: .16em; line-height: 1.8; }
+.portrait-label span { font-size: 8px; font-weight: 400; letter-spacing: .12em; opacity: .65; }
+.portrait-barcode { width: 57px; height: 22px; background: repeating-linear-gradient(90deg, rgba(255,239,245,.8) 0 1px, transparent 1px 3px, rgba(255,239,245,.8) 3px 5px, transparent 5px 7px); }
+.portrait-hanger { position: absolute; z-index: 4; left: 50%; top: -210px; width: 58px; height: 242px; transform: translateX(-50%); pointer-events: none; }
+.portrait-strap {
+  position: absolute; top: -45px; left: 12px; width: 34px; height: 209px;
+  border-radius: 2px 2px 5px 5px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 2px, rgba(255,218,235,.07) 2px 3px, rgba(0,0,0,.18) 3px 4px),
+    repeating-linear-gradient(90deg, transparent 0 2px, rgba(255,218,235,.035) 2px 3px),
+    linear-gradient(90deg, #100b0f 0%, #6a4357 8%, #36212d 17%, #452b39 42%, #291a23 72%, #694052 93%, #160e14 100%);
+  border-left: 1px solid rgba(248,191,210,.26); border-right: 1px solid rgba(248,191,210,.2);
+  box-shadow: inset 2px 0 3px rgba(0,0,0,.45), inset -2px 0 3px rgba(0,0,0,.35), 6px 3px 9px rgba(0,0,0,.35);
+  mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.12) 18%, rgba(0,0,0,.65) 38%, #000 58%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.12) 18%, rgba(0,0,0,.65) 38%, #000 58%);
+}
+.portrait-strap::before, .portrait-strap::after {
+  content: ''; position: absolute; top: 0; bottom: 10px; width: 1px;
+  background: repeating-linear-gradient(180deg, rgba(227,181,205,.32) 0 3px, transparent 3px 6px);
+}
+.portrait-strap::before { left: 4px; }
+.portrait-strap::after { right: 4px; }
+.portrait-clip { position: absolute; top: 150px; left: 6px; width: 46px; height: 85px; border: 2px solid #82747b; border-radius: 7px 7px 10px 10px; background: linear-gradient(100deg, #181116, #64565e 15%, #1d171b 25%, #100c0f 78%, #a4979e); box-shadow: 5px 8px 12px rgba(0,0,0,.4), inset 0 1px 1px #d1bcc7; }
+.portrait-clip::before { content: ''; position: absolute; left: 9px; top: 12px; width: 20px; height: 20px; border: 2px solid #b29ca8; border-radius: 50%; background: #171015; box-shadow: inset 0 0 0 4px #392a33; }
+.portrait-clip i { position: absolute; bottom: 6px; left: 6px; right: 6px; height: 10px; background: linear-gradient(#92808b,#211820); border-radius: 2px; }
+.tilted-portrait:hover { --ticket-rotate: -3deg; box-shadow: none; filter: none; }
+.tilted-portrait:hover .portrait-avatar { transform: scale(1.7); transform-origin: 50% 24%; filter: saturate(1) brightness(1.02); }
+.portrait { animation: portrait-gentle-sway 7s ease-in-out infinite; }
+.portrait:hover { animation-play-state: paused; }
+@keyframes portrait-gentle-sway {
+  0%, 100% { transform: rotateZ(calc(var(--ticket-rotate) - 1.4deg)) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry)) scale(var(--tilt-scale)); }
+  50% { transform: rotateZ(calc(var(--ticket-rotate) + 1.4deg)) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry)) scale(var(--tilt-scale)); }
+}
+@media (prefers-reduced-motion: reduce) { .portrait { animation: none; } }
+.portrait-note { max-width: 490px; margin-top: 35px; line-height: 1.8; transform: rotate(-7deg); }
+@media (max-width: 1000px) { .about .portrait-wrap { width: min(85%, 490px); margin: 0 auto 40px; } .about .portrait { height: auto; max-width: 490px; } }
+@media (max-width: 600px) { .about .portrait { height: auto; border-radius: 14px; } .portrait-card-surface { padding: 28px 16px 16px; } .portrait .portrait-label { font-size: 8px; } .portrait-label span { font-size: 6px; } .portrait-barcode { width: 40px; height: 18px; } }
 .about-copy .eyebrow { color: #8f8a96; margin-bottom: 28px; }
 .about h2, .strength-heading h2 { font-family: 'Manrope', 'PingFang SC', sans-serif; font-size: clamp(44px, 4.2vw, 76px); line-height: 1.14; letter-spacing: -.06em; font-weight: 400; margin: 0 0 42px; }
 .about h2 span { font-family: Georgia, 'Songti SC', serif; color: var(--acid); font-style: italic; }
