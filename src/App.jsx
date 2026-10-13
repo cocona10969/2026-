@@ -3,6 +3,7 @@ import BorderGlow from './components/BorderGlow'
 import MagicRings from './components/MagicRings'
 import ColorBends from './components/ColorBends'
 import LiquidEther from './components/LiquidEther'
+import VideoCoverFlow from './components/VideoCoverFlow'
 
 const assetPath = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`
 
@@ -191,7 +192,7 @@ const orbitShowcaseVideos = [
   { title: '平凡夏日', eyebrow: 'ORDINARY SUMMER', src: assetPath('/videos/aigc-01.mp4'), poster: assetPath('/videos/posters/aigc-01.jpg'), accent: '#60dcff' },
   { title: '尤尼克斯羽毛球广告', eyebrow: 'YONEX BADMINTON AD', src: assetPath('/videos/aigc-02.mp4'), poster: assetPath('/videos/posters/aigc-02.jpg'), accent: '#ff7d62' },
   { title: '挡在你身前', eyebrow: 'STAND IN FRONT OF YOU', src: assetPath('/videos/aigc-03.mp4'), poster: assetPath('/videos/posters/aigc-03.jpg'), accent: '#c6ff6e' },
-  { title: '短剧打斗测试 DEMO', eyebrow: 'SHORT DRAMA COMBAT TEST DEMO', src: assetPath('/videos/aigc-04.mp4'), poster: assetPath('/videos/posters/aigc-04.jpg'), accent: '#ffd166' },
+  { title: '个人IP可口可乐广告', eyebrow: 'PERSONAL IP COCA-COLA AD', src: assetPath('/videos/aigc-04.mp4'), poster: assetPath('/videos/posters/aigc-04.jpg'), accent: '#ffd166' },
   { title: 'LAMER 广告', eyebrow: 'LA MER AD', src: assetPath('/videos/aigc-05.mp4'), poster: assetPath('/videos/posters/aigc-05.jpg'), accent: '#b18cff' },
   { title: '短漫测试 DEMO', eyebrow: 'SHORT COMIC TEST DEMO', src: assetPath('/videos/aigc-06.mp4'), poster: assetPath('/videos/posters/aigc-06.jpg'), accent: '#cc5a8b' },
   { title: '汽车广告', eyebrow: 'AUTOMOTIVE AD', src: assetPath('/videos/aigc-07.mp4'), poster: assetPath('/videos/posters/aigc-07.jpg'), accent: '#f8bfd2' },
@@ -494,220 +495,35 @@ function ProjectVisual({ project }) {
   )
 }
 
-function WorksOrbitShowcase() {
+function WorksVideoShowcase() {
   const orbitRef = useRef(null)
-  const modalOpenRef = useRef(false)
   const [activeOrbitVideoIndex, setActiveOrbitVideoIndex] = useState(null)
   const activeOrbitVideo = activeOrbitVideoIndex === null ? null : orbitShowcaseVideos[activeOrbitVideoIndex]
 
   const closeOrbitVideo = () => {
-    modalOpenRef.current = false
     setActiveOrbitVideoIndex(null)
   }
 
   const openOrbitVideo = (index) => {
-    modalOpenRef.current = true
     orbitRef.current?.querySelectorAll('video').forEach((video) => video.pause())
     setActiveOrbitVideoIndex(index)
   }
 
   useEffect(() => {
-    document.body.classList.toggle('modal-open', activeOrbitVideoIndex !== null)
     const handleEscape = (event) => {
       if (event.key === 'Escape') closeOrbitVideo()
     }
     window.addEventListener('keydown', handleEscape)
     return () => {
-      document.body.classList.remove('modal-open')
       window.removeEventListener('keydown', handleEscape)
     }
   }, [activeOrbitVideoIndex])
 
-  useEffect(() => {
-    const rootEl = orbitRef.current
-    if (!rootEl) return undefined
-
-    const cards = [...rootEl.querySelectorAll('.portfolio-orbit-card')]
-    const items = cards.map((card, index) => ({
-      card,
-      video: card.querySelector('video'),
-      angle: (Math.PI * 2 * index) / cards.length,
-      active: false,
-      previewing: false,
-    }))
-
-    const state = {
-      mx: 0,
-      my: 0,
-      tx: 0,
-      ty: 0,
-      orbitTime: 0,
-      lastFrame: performance.now(),
-      paused: false,
-    }
-
-    const updatePointer = (event) => {
-      state.tx = (event.clientX / window.innerWidth - 0.5) * 2
-      state.ty = (event.clientY / window.innerHeight - 0.5) * 2
-      document.documentElement.style.setProperty('--page-raster-x', `${event.clientX}px`)
-      document.documentElement.style.setProperty('--page-raster-y', `${window.scrollY + event.clientY}px`)
-    }
-
-    const resetPointer = () => {
-      state.tx = 0
-      state.ty = 0
-      document.documentElement.style.setProperty('--page-raster-x', '50vw')
-      document.documentElement.style.setProperty('--page-raster-y', '50vh')
-    }
-
-    const activateCard = (card) => {
-      state.paused = true
-      items.forEach((item) => {
-        const active = item.card === card
-        item.active = active
-        item.card.classList.toggle('is-active', active)
-        if (!item.video) return
-        if (active) {
-          item.video.currentTime = 0
-          item.video.muted = true
-          item.video.play().catch(() => {})
-        } else {
-          item.video.pause()
-        }
-      })
-    }
-
-    const deactivateCards = () => {
-      state.paused = false
-      items.forEach((item) => {
-        item.active = false
-        item.card.classList.remove('is-active')
-      })
-    }
-
-    const listeners = items.map((item) => {
-      const enter = () => activateCard(item.card)
-      const leave = () => deactivateCards()
-      item.card.addEventListener('pointerenter', enter)
-      item.card.addEventListener('pointerleave', leave)
-      return { item, enter, leave }
-    })
-
-    window.addEventListener('pointermove', updatePointer)
-    window.addEventListener('pointerleave', resetPointer)
-
-    let raf = 0
-    const animate = (now) => {
-      const delta = Math.min((now - state.lastFrame) / 1000, 0.05)
-      state.lastFrame = now
-      if (!state.paused && !modalOpenRef.current) state.orbitTime += delta
-
-      state.mx += (state.tx - state.mx) * 0.075
-      state.my += (state.ty - state.my) * 0.075
-      rootEl.style.setProperty('--orbit-mx', state.mx.toFixed(3))
-      rootEl.style.setProperty('--orbit-my', state.my.toFixed(3))
-
-      const radiusX = Math.min(window.innerWidth * 0.44 + 50, 810)
-      const radiusY = Math.min(window.innerHeight * 0.018, 14)
-      const radiusZ = Math.min(window.innerWidth * 0.3 + 50, 480)
-
-      items.forEach((item) => {
-        const a = item.angle + state.orbitTime * 0.11
-        const depth = Math.sin(a)
-        const side = Math.cos(a)
-        const pitch = Math.sin(a * 2)
-        const sideAmount = Math.abs(side)
-        const z = depth * radiusZ
-        const front = (z + radiusZ) / (radiusZ * 2)
-        const frontCurve = Math.max(0, front - 0.45) / 0.55
-        const x = side * radiusX + state.mx * 38
-        const y = pitch * radiusY * (1 - frontCurve * 0.9) + state.my * 22
-        const scale = 0.66 + front * 0.34
-        const rawTubeTurn = side * (42 + sideAmount * 52) * (1 - frontCurve * 0.38)
-        const tubeTurn = Math.max(-82, Math.min(82, rawTubeTurn))
-        const compression = Math.max(0.24, 1 - Math.pow(sideAmount, 1.1) * 0.68 - Math.max(0, 0.48 - front) * 0.1)
-        const edgeDrift = side * sideAmount * 8
-        const backFade = Math.max(0, 0.5 - front) / 0.5
-        const bend = Math.pow(sideAmount, 1.35) * (5.5 + backFade * 5)
-        const shade = Math.min(0.62, sideAmount * 0.18 + backFade * 0.42)
-        const brightness = 0.72 + front * 0.36
-        const blur = Math.max(0, 0.45 - front) * 2.4
-
-        item.card.style.setProperty('--tube-shade', shade.toFixed(3))
-        item.card.style.setProperty('--edge-x', `${50 + side * 50}%`)
-        item.card.style.transformOrigin = `${50 - side * sideAmount * 18}% 50%`
-        item.card.style.clipPath = side >= 0
-          ? `polygon(0 0, calc(100% - ${bend.toFixed(2)}%) 0, 100% 50%, calc(100% - ${bend.toFixed(2)}%) 100%, 0 100%)`
-          : `polygon(${bend.toFixed(2)}% 0, 100% 0, 100% 100%, ${bend.toFixed(2)}% 100%, 0 50%)`
-        item.card.style.transform = `
-          translate(-50%, -50%)
-          translate3d(${x + edgeDrift}px, ${y}px, ${z}px)
-          rotateY(${tubeTurn.toFixed(2)}deg)
-          rotateZ(-10deg)
-          scaleX(${compression.toFixed(3)})
-          scale(${scale.toFixed(3)})
-        `
-        item.card.style.opacity = '1'
-        item.card.style.filter = `brightness(${brightness.toFixed(3)}) blur(${blur.toFixed(2)}px)`
-        item.card.style.zIndex = String(Math.round(front * 220) + 20)
-
-        const shouldPreview = !modalOpenRef.current && (item.active || front > 0.58)
-        if (item.video && shouldPreview !== item.previewing) {
-          item.previewing = shouldPreview
-          if (shouldPreview) {
-            item.video.muted = true
-            item.video.play().catch(() => {})
-          } else {
-            item.video.pause()
-          }
-        }
-      })
-
-      raf = requestAnimationFrame(animate)
-    }
-
-    raf = requestAnimationFrame(animate)
-
-    return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener('pointermove', updatePointer)
-      window.removeEventListener('pointerleave', resetPointer)
-      listeners.forEach(({ item, enter, leave }) => {
-        item.card.removeEventListener('pointerenter', enter)
-        item.card.removeEventListener('pointerleave', leave)
-        item.video?.pause()
-      })
-    }
-  }, [])
-
   return (
-    <div className="portfolio-orbit-showcase" ref={orbitRef} aria-label="3D video orbit showcase">
-      <div className="portfolio-orbit-glow" aria-hidden="true" />
-      <div className="portfolio-orbit-stage">
-        <div className="portfolio-orbit-core" aria-hidden="true">
-          <span />
-          <i />
-        </div>
-        {orbitShowcaseVideos.map((video, index) => (
-          <article
-            className="portfolio-orbit-card"
-            key={`${video.src}-${index}`}
-            style={{ '--accent': video.accent }}
-            role="button"
-            tabIndex={0}
-            onClick={() => openOrbitVideo(index)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') openOrbitVideo(index)
-            }}
-          >
-            <video muted loop playsInline preload="metadata" poster={video.poster}>
-              <source src={video.src} type="video/mp4" />
-            </video>
-          </article>
-        ))}
-      </div>
+    <div className="portfolio-video-showcase" ref={orbitRef}>
+      <VideoCoverFlow items={orbitShowcaseVideos} paused={activeOrbitVideoIndex !== null} onSelect={(_, index) => openOrbitVideo(index)} />
       {activeOrbitVideo ? (
-        <div className="video-modal orbit-video-modal" role="dialog" aria-modal="true" aria-label="Orbit video player">
+        <div className="video-modal orbit-video-modal" role="dialog" aria-label="视频播放器">
           <button className="video-modal-backdrop" type="button" onClick={closeOrbitVideo} aria-label="Close video player" />
           <div className="video-modal-panel orbit-video-panel">
             <div className="video-modal-top">
@@ -1288,27 +1104,19 @@ function App() {
         </div>
       </div>
 
-      <section className="works section" id="works">
+      <section className="works section works-stacked" id="works">
+        <video className="works-heading-background" src={assetPath('/videos/visual-display-background.mp4')} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
+        <div className="works-background-tint" aria-hidden="true" />
         <div className="shell">
           <div className="section-kicker light"><span>03</span><p>视觉展示</p></div>
           <div className="works-heading">
-            <h2>VISUAL<br /><em>DISPLAY</em></h2>
-            <div className="works-falling-character" aria-hidden="true">
-              <img src="/works-character-crouch-new.png" alt="" loading="lazy" decoding="async" />
+            <div className="works-title-group">
+            <h2>VISUAL DISPLAY</h2>
+            <p>从品牌主视觉、电商内容到 AIGC 图像与视频，我擅长在传统设计方法与 AI 工作流之间切换，为团队搭建可复用、可规模化的创意系统。</p>
             </div>
-            <div className="works-thought-bubble" aria-hidden="true">
-              <img className="thought-cloud" src="/images/character/thought-bubble.png" alt="" loading="lazy" decoding="async" />
-              <div className="thought-product-carousel">
-                <img className="thought-product thought-drink" src="/images/thought/thought-drink.png" alt="" loading="lazy" decoding="async" />
-                <img className="thought-product thought-plane" src="/images/thought/thought-plane.png" alt="" loading="lazy" decoding="async" />
-                <img className="thought-product thought-player" src="/images/thought/thought-player.png" alt="" loading="lazy" decoding="async" />
-                <img className="thought-product thought-suitcase" src="/images/thought/thought-suitcase.png" alt="" loading="lazy" decoding="async" />
-              </div>
-            </div>
-            <p>一些关于速度、质感、内容与未来的视觉实验。<br />真实项目图片将在下一阶段替换。</p>
           </div>
           <div className="works-orbit-column">
-            <WorksOrbitShowcase />
+            <WorksVideoShowcase />
           </div>
           <div className="projects-grid">
             {projects.map((project, index) => (

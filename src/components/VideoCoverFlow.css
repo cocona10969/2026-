@@ -1,0 +1,24 @@
+/* Adapted from cover-flow-showcase (MIT), scoped to the portfolio video stage. */
+.video-cover-flow { width: 100%; margin: 0 auto; }
+.video-cover-flow__stage { position: relative; height: clamp(500px, 46vw, 650px); overflow: hidden; cursor: ew-resize; border: 0; border-radius: 0; background: transparent; box-shadow: none; touch-action: pan-y; mask-image: linear-gradient(90deg, transparent, rgba(0,0,0,.45) 7%, #000 20%, #000 80%, rgba(0,0,0,.45) 93%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, rgba(0,0,0,.45) 7%, #000 20%, #000 80%, rgba(0,0,0,.45) 93%, transparent); }
+.video-cover-flow__stage:focus-visible { outline: 1px solid #cc5a8b; outline-offset: 5px; }
+.video-cover-flow__ambience { display: none; }
+.video-cover-flow__cards { position: absolute; left: 50%; top: 46%; width: clamp(380px, 38vw, 560px); aspect-ratio: 11 / 7; transform: translate(-50%,-50%); perspective: 1800px; }
+.video-cover-card { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; transform-origin: center; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform,opacity; transition: transform 180ms cubic-bezier(.22,.72,.18,1),opacity 180ms cubic-bezier(.22,.72,.18,1); }
+.video-cover-card__face { position: absolute; inset: 0; display: block; overflow: hidden; border-radius: 16px; border: 1px solid rgba(255,255,255,.15); background: #080409; box-shadow: 0 28px 70px rgba(0,0,0,.35); }
+.video-cover-card video { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.video-cover-card__reflection { position: absolute; left: 7%; bottom: -82px; width: 86%; height: 78px; background-size: cover; background-position: center bottom; transform: scaleY(-1); opacity: .22; border-radius: 12px; mask-image: linear-gradient(0deg,rgba(0,0,0,.65),transparent); pointer-events: none; }
+.video-cover-card__shine { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg,rgba(255,255,255,.09),transparent 20%,transparent 70%,rgba(0,0,0,.2)); }
+.video-cover-card__caption { position: absolute; inset: auto 0 0; display: flex; flex-direction: column; gap: 5px; padding: 40px 20px 18px; background: linear-gradient(transparent,rgba(8,4,9,.88)); color: #fff; }
+.video-cover-card__caption small { font-size: 8px; letter-spacing: .18em; opacity: .65; }
+.video-cover-card__caption strong { font-size: 17px; font-weight: 500; }
+.video-cover-card__play { position: absolute; right: 20px; bottom: 22px; font-size: 16px; opacity: .65; }
+.video-cover-card.is-center .video-cover-card__face { border-color: rgba(248,191,210,.45); }
+.video-cover-card:focus-visible { outline: 2px solid #f8bfd2; outline-offset: 5px; border-radius: 16px; }
+.video-cover-flow__controls { display: flex; justify-content: center; align-items: center; gap: 22px; margin-top: 22px; }
+.video-cover-flow__controls > button { width: 36px; height: 36px; border: 1px solid rgba(248,191,210,.15); border-radius: 50%; background: transparent; color: rgba(255,255,255,.7); cursor: pointer; }
+.video-cover-flow__dots { display: flex; gap: 10px; align-items: center; }
+.video-cover-flow__dots button { padding: 0; width: 7px; height: 7px; border: 0; border-radius: 20px; background: rgba(255,255,255,.3); cursor: pointer; transition: width .3s ease,background .3s ease; }
+.video-cover-flow__dots button[aria-current='true'] { width: 28px; background: #f8bfd2; }
+@media(max-width:700px) { .video-cover-flow__stage { height: 410px; border-radius: 0; } .video-cover-flow__cards { width: min(320px, 76vw); } .video-cover-card__caption strong { font-size: 13px; } .video-cover-card__caption { padding: 32px 12px 12px; } }
+@media(prefers-reduced-motion:reduce) { .video-cover-card { transition: none; } }
