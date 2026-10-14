@@ -149,6 +149,17 @@ const projects = [
   },
   {
     id: '04',
+    title: '西游后记',
+    type: 'JOURNEY TO THE WEST: EPILOGUE',
+    caption: '以西游题材展开角色、场景与动作的生成式影像探索。',
+    tone: 'ember',
+    cover: '/videos/posters/aigc-09.jpg',
+    tag: '',
+    glow: '38 72 70',
+    colors: ['#2e0d1f', '#d7ae72', '#f8bfd2'],
+  },
+  {
+    id: '05',
     title: '创意宣传',
     type: 'CREATIVE PROMOTION',
     caption: '从镜头语言、节奏到生成参数，设计 15–30 秒商业短片的完整视觉路径。',
@@ -196,6 +207,7 @@ const orbitShowcaseVideos = [
   { title: 'LAMER 广告', eyebrow: 'LA MER AD', src: assetPath('/videos/aigc-05.mp4'), poster: assetPath('/videos/posters/aigc-05.jpg'), accent: '#b18cff' },
   { title: '短漫测试 DEMO', eyebrow: 'SHORT COMIC TEST DEMO', src: assetPath('/videos/aigc-06.mp4'), poster: assetPath('/videos/posters/aigc-06.jpg'), accent: '#cc5a8b' },
   { title: '汽车广告', eyebrow: 'AUTOMOTIVE AD', src: assetPath('/videos/aigc-07.mp4'), poster: assetPath('/videos/posters/aigc-07.jpg'), accent: '#f8bfd2' },
+  { title: '西游后记', eyebrow: 'JOURNEY TO THE WEST: EPILOGUE', src: assetPath('/videos/aigc-09.mp4'), poster: assetPath('/videos/posters/aigc-09.jpg'), accent: '#d7ae72' },
 ]
 
 const brandVisualImages = [
@@ -350,6 +362,15 @@ const galleryProjects = {
     ],
   },
   '04': {
+    eyebrow: 'JOURNEY TO THE WEST: EPILOGUE',
+    title: '西游后记',
+    layout: 'long-scroll',
+    longImage: assetPath('/images/projects/journey-epilogue-long-showcase.jpg'),
+    description: '以西游题材展开角色、场景与动作的生成式影像探索。',
+    tags: ['AIGC', 'STORY', 'DEMO'],
+    images: [{ title: '西游后记', meta: 'JOURNEY TO THE WEST: EPILOGUE', src: assetPath('/videos/posters/aigc-09.jpg') }],
+  },
+  '05': {
     eyebrow: 'CREATIVE PROMOTION CASE',
     title: '创意宣传',
     layout: 'long-scroll',

@@ -1747,7 +1747,7 @@ svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-l
   flex: .72 1 0;
   min-width: 0;
   border-radius: 28px;
-  overflow: hidden;
+  overflow: clip;
   transition: flex .82s cubic-bezier(.19,1,.22,1), min-width .82s cubic-bezier(.19,1,.22,1), transform .62s cubic-bezier(.19,1,.22,1), filter .62s ease;
   will-change: transform, filter;
 }
@@ -3849,6 +3849,7 @@ body.modal-open {
   .works.works-motion-ready .project-card.border-glow-card:nth-child(2) { transition-delay: .9s; }
   .works.works-motion-ready .project-card.border-glow-card:nth-child(3) { transition-delay: 1.04s; }
   .works.works-motion-ready .project-card.border-glow-card:nth-child(4) { transition-delay: 1.18s; }
+  .works.works-motion-ready .project-card.border-glow-card:nth-child(5) { transition-delay: 1.32s; }
 
   .works.works-visible .projects-grid:hover .project-card.border-glow-card,
   .works.works-visible .projects-grid:focus-within .project-card.border-glow-card,
